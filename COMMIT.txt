@@ -1,0 +1,7 @@
+feat(attack-surface): launch site with first threat model (2026-11-14-44)
+
+- engine: home with STRIDE explainer and filtered gallery, about page, item template
+- item renderer: interactive DFD (wide/tall layouts), assets, STRIDE heat table + threat cards,
+  attack tree with control toggles and minimal-cut, before/after risk matrix, controls, ATT&CK mapping
+- tools: build_item (validates JSON, writes data.js for file://), og, build_docs (he/en docx+pdf), check
+- item 2026-11-14-44: AI-chip export controls after the Megaspeed allegations (11 threats, 8 controls)

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Paste as the FIRST thing in <head> to avoid a light/dark flash -->
+<script>(function(){var t;try{t=localStorage.getItem("desk-theme")}catch(e){}document.documentElement.setAttribute("data-theme",t||(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"))})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Attack Surface · מודלים של איומים מתוך החדשות</title>
+<meta name="description" content="מודלים של איומים, הגנתיים בלבד, על מערכות שמופיעות בחדשות: דיאגרמת זרימת נתונים, טבלת STRIDE, עץ תקיפה, מטריצת סיכון והגנות.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Attack Surface">
+<meta property="og:description" content="מודלים של איומים מתוך החדשות. הגנתיים בלבד.">
+<meta property="og:image" content="https://ronygralnic.github.io/attack-surface/assets/og.png">
+<meta property="og:url" content="https://ronygralnic.github.io/attack-surface/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">דילוג לתוכן</a>
+<header class="site-header"><div class="wrap-wide bar">
+  <a class="brand" href="index.html" aria-current="page"><svg class="brand-mark" viewBox="0 0 26 26" fill="none" aria-hidden="true"><rect class="bd" x="1.5" y="1.5" width="23" height="23" rx="5" stroke-width="1.6"/><circle class="ring" cx="13" cy="13" r="6" stroke-width="1.6"/><circle class="core" cx="13" cy="13" r="2.4"/><path class="ring" d="M13 1.5v5M13 19.5v5M1.5 13h5M19.5 13h5" stroke-width="1.6"/></svg><span dir="ltr">Attack Surface</span><small>מודלים של איומים מתוך החדשות</small></a>
+  <nav class="nav" aria-label="ראשי"><a href="index.html" aria-current="page">פריטים</a><a href="about.html">אודות</a></nav>
+  <button type="button" class="icon-btn theme-toggle" aria-label="מצב כהה"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+
+<main id="main">
+  <section class="wrap hero">
+    <div class="tb-frame">
+      <span class="tb-label" dir="ltr">trust boundary</span>
+      <p class="kicker" dir="ltr" style="text-align:right">Threat models · defensive only</p>
+      <h1>כל מערכת היא<br>משטח תקיפה.</h1>
+      <p class="lede">כל פריט כאן לוקח מערכת אחת מתוך החדשות ושואל עליה את מה שצוות אבטחה היה שואל לפני השקה: מה זורם בה, איפה עובר גבול אמון, מה יכול להשתבש בכל רכיב, ומה הכי שווה לתקן קודם.</p>
+      <p class="muted small" style="margin:0">לא מדריך תקיפה. האיומים מתוארים ברמת המושג, וכל ניתוח נגמר בהגנות.</p>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="stride-h">
+    <div class="sec-head"><span class="no">S·T·R·I·D·E</span><h2 id="stride-h">שש שאלות לכל רכיב</h2></div>
+    <p class="sec-intro">STRIDE היא רשימת בדיקה שפותחה במיקרוסופט. היא לא מנחשת איומים, היא מכריחה לשאול שש שאלות קבועות על כל רכיב בדיאגרמה. לחצו על אות.</p>
+    <div class="stride-tiles" id="stride-tiles"></div>
+    <div class="callout stride-explain" id="stride-explain" aria-live="polite"><p>בחרו אות כדי לראות את השאלה, את ההגנה הקלאסית, ואת הפריטים באתר שבהם היא מופיעה.</p></div>
+  </section>
+
+  <section class="wrap" aria-labelledby="how-h">
+    <div class="sec-head"><span class="no">איך לקרוא</span><h2 id="how-h">שבעה צעדים בכל פריט</h2></div>
+    <ol class="steps">
+      <li><b>הדיאגרמה.</b> מי משתתף, מה זורם ביניהם, ואיפה עובר גבול אמון. לחיצה על רכיב מציגה את האיומים שלו.</li>
+      <li><b>הנכסים.</b> מה בכלל שווה הגנה, ולמי.</li>
+      <li><b>טבלת STRIDE.</b> רכיבים מול שש קטגוריות, עם כרטיס לכל איום ובסיס בדיווח.</li>
+      <li><b>עץ תקיפה.</b> הדרכים להגיע למטרה המרכזית. מפעילים הגנות ורואים אילו מסלולים נסגרים.</li>
+      <li><b>מטריצת סיכון.</b> סבירות מול השפעה, לפני ואחרי ההגנות.</li>
+      <li><b>הגנות וסיכון שיורי.</b> מה מכסה מה, ומה נשאר פתוח גם אחרי הכל.</li>
+      <li><b>מסמך להורדה.</b> אותו מודל כמסמך עבודה, בעברית ובאנגלית.</li>
+    </ol>
+  </section>
+
+  <section class="wrap-wide" aria-labelledby="items-h" id="items">
+    <div class="wrap" style="padding:0">
+      <div class="sec-head"><span class="no">הפריטים</span><h2 id="items-h">מודלים של איומים</h2></div>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="gallery" id="gallery" aria-live="polite"></div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap-wide">
+  <p><span dir="ltr">Attack Surface</span> · מודלים של איומים, הגנתיים בלבד, על מערכות מתוך החדשות. ניתוח לימודי, לא ייעוץ משפטי ולא קביעה עובדתית לגבי אנשים או חברות.</p>
+  <p><a href="about.html">אודות</a></p>
+</div></footer>
+<script src="kit/kit.js"></script>
+<script src="items/data.js"></script>
+<script src="assets/home.js"></script>
+<script>Desk.goat("attack-surface",".github.io")</script>
+</body>
+</html>

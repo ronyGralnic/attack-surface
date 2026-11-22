@@ -1,0 +1,442 @@
+{
+  "title": "The automatic defender needs a threat model of its own",
+  "subtitle": "A defensive threat model of a water utility that adds an AI-based defence pipeline (code scanning, network monitoring, a digital twin and fixes), following Anne Neuberger's call to use AI to defend critical infrastructure",
+  "summary": "The article argues that AI helps defenders more than attackers, because defenders own their code and see their own traffic. This model accepts that direction and asks what the defender itself adds to the attack surface. A fictional mid-size water utility adds everything the article proposes: AI code and firmware scanning, AI anomaly detection, a digital twin, and an AI generator of patches and workarounds that feeds a change-approval and deployment step with write access to the controllers. The model finds twelve threats across all six STRIDE categories; eight of them sit on the five defensive components. In the attack tree for the main threat, physical disruption of water supply, AI-generated fixes alone close no branch, because attackers can also enter with real credentials. The smallest set that closes every path is two controls: one that sees or survives the intruder (monitoring or manual fallback), and one that keeps a human between the AI and the controllers (two-person approval). That second control is not in the article.",
+  "status": "Educational analysis · draft for discussion",
+  "method": "STRIDE per element on a data-flow diagram, attack tree for the main threat, 5×5 likelihood/impact matrix",
+  "defensiveNote": "Defensive only. Threats are described at concept level, as in a defender's design document. No exploitation details, attack code or instructions. The utility is fictional, built from the examples in the article.",
+  "claimsNote": "This is an opinion piece (By Invitation). The claim that AI helps defenders more than attackers is the author's position; according to the biography at the end of the piece she is now a general partner at the venture firm Andreessen Horowitz. The DARPA results come from a competition on open-source software with planted vulnerabilities, not from live operational systems. The attribution of intrusions to China is the US government's; China denies it. The model accepts the article's direction and asks one question: what it takes for the defender not to become the weak point.",
+  "facts": [
+    {
+      "k": "System",
+      "v": "A mid-size water utility and its AI-based defence pipeline"
+    },
+    {
+      "k": "Trust boundaries",
+      "v": "5: external, partners, IT network, isolated twin environment, operational network"
+    },
+    {
+      "k": "Main threat",
+      "v": "Physical disruption of water supply"
+    },
+    {
+      "k": "Source",
+      "v": "The Economist, November 14th 2026 (opinion)"
+    }
+  ],
+  "minute": [
+    "Anne Neuberger, a former US deputy national security adviser, writes that the debate about AI risk forgets how vulnerable the status quo already is. She cites NotPetya in 2017, a Russian attack aimed at Ukraine that spread worldwide within hours, including to the shipping firm Maersk; Iranian-linked intrusions into American water utilities in 2023; and Chinese state hackers who, she writes, have pre-positioned footholds in power, water and transport systems.",
+    "Her central claim: few of those attacks needed brilliant new exploits. They worked because defenders could not find, fix or fence off known weaknesses fast enough across old, sprawling systems. AI helps attackers too, lowering the skill required and letting them try every door continuously. But, she argues, it helps defenders more: they own their code and see their own traffic, and can analyse both from the inside.",
+    "She describes four uses available today: line-by-line code analysis, spotting intruders who use stolen credentials and legitimate tools, digital twins of grids and water systems, and fixing. In DARPA's AI Cyber Challenge last year, AI systems patched 43 planted vulnerabilities and found 18 previously unknown ones, fixing 11. For old equipment that cannot be patched, AI can propose a specific workaround such as a firewall rule, tested on the twin before it goes live.",
+    "Her recommendations: governments should start with the operators and shared suppliers whose failure would hurt most, enlist AI labs to find flaws and produce fixes by set deadlines, and share the cost for small operators. Success should be measured by how fast threats are contained and whether the service survives. Findings should be shared through coordinated disclosure. And there is precedent: the International Counter Ransomware Initiative, with nearly 70 countries, and ransom payments that have fallen every year since peaking above $1bn in 2023."
+  ],
+  "scope": {
+    "in": [
+      "A mid-size water utility: IT network, operational network, historian and controllers",
+      "The AI-based defence pipeline the article proposes: code and firmware scanning, monitoring, digital twin, patch and workaround generator, approval and deployment",
+      "The pipeline's external links: AI labs, government and partners, coordinated disclosure and deadlines"
+    ],
+    "out": [
+      "Technical details of vulnerabilities or exploits",
+      "Physical security of the utility's sites",
+      "Whether AI helps defenders or attackers more in general",
+      "Any specific real utility, vendor or lab"
+    ]
+  },
+  "boundaries": {
+    "ext": "External",
+    "ot": "OT network",
+    "it": "Corporate IT",
+    "twin": "Isolated twin",
+    "partners": "Partners and labs"
+  },
+  "kinds": {
+    "entity": "External entity",
+    "process": "Process",
+    "store": "Data store"
+  },
+  "nodes": {
+    "E1": {
+      "label": "AI-assisted attacker",
+      "sub": "state or criminal",
+      "desc": "Two kinds, per the article: pre-positioned state hackers waiting for the right moment, and less skilled attackers whom AI lets try every door continuously. Modelled as an adversary, at concept level only."
+    },
+    "P6": {
+      "label": "Control systems",
+      "sub": "SCADA and PLCs",
+      "desc": "The equipment that runs pumps, valves and chemical dosing. Much of it is old and hard to update. Any change that arrives here changes something physical."
+    },
+    "D2": {
+      "label": "Historian and logs",
+      "sub": "operational telemetry",
+      "desc": "Sensor readings, commands sent and access logs. The AI learns what normal looks like from this, and the twin is built from it. Whoever controls what is written here controls what defenders see."
+    },
+    "P5": {
+      "label": "Change approval",
+      "sub": "deploys to controllers",
+      "desc": "Where a recommendation becomes a change in the plant. The most privileged component in the pipeline: it writes to controllers. This is where it is decided whether a human approves every change or the machine deploys on its own."
+    },
+    "P2": {
+      "label": "AI monitoring",
+      "sub": "anomaly detection",
+      "desc": "Reads traffic and logs looking for signs of an intruder using stolen credentials and legitimate tools, which older tools miss according to the article. Sends alerts to operators."
+    },
+    "D1": {
+      "label": "Code and firmware",
+      "sub": "utility and vendors",
+      "desc": "The code the utility holds, controller firmware and the component list. The defenders' advantage per the article: they see the code from the inside, the attacker only from outside."
+    },
+    "P3": {
+      "label": "Digital twin",
+      "sub": "virtual replica of the plant",
+      "desc": "An isolated environment where every patch or workaround is tested before going live. If the twin does not resemble the plant, the test approves something that was never really tested."
+    },
+    "P4": {
+      "label": "Patch generator",
+      "sub": "AI fixes, workarounds",
+      "desc": "Takes a finding and proposes a code fix or, for equipment that cannot be updated, a workaround such as a firewall rule or a settings change. Its output is code that will run in the plant, so it needs the same review as code written by a person."
+    },
+    "P1": {
+      "label": "AI code scanning",
+      "sub": "code and firmware",
+      "desc": "Goes through code and firmware line by line looking for vulnerabilities. The output is a list of open weaknesses, the most useful asset an attacker could get from the utility."
+    },
+    "E3": {
+      "label": "Government, partners",
+      "sub": "regulator, ISACs, NATO",
+      "desc": "Receive findings through coordinated disclosure, set priorities and deadlines, and under the proposal share the cost for small operators."
+    },
+    "E2": {
+      "label": "AI lab",
+      "sub": "model provider",
+      "desc": "Under the article's proposal, governments enlist AI labs to find flaws in code and firmware and produce fixes. The plant's sensitive code goes out, and the tools that come in come from outside."
+    }
+  },
+  "flows": {
+    "f1": "Access with stolen credentials and legitimate tools (attack path)",
+    "f2": "Code and firmware for scanning",
+    "f3": "Model and analysis service",
+    "f4": "Readings, commands and access logs",
+    "f5": "Logs and traffic for monitoring",
+    "f6": "Operational data to build the twin",
+    "f7": "Vulnerability findings",
+    "f8": "Anomaly alerts",
+    "f9": "Patch or workaround for testing",
+    "f10": "Test results on the twin",
+    "f11": "Deploy patch or firewall rule",
+    "f12": "Findings via coordinated disclosure",
+    "f13": "Demand to fix by a deadline",
+    "f14": "Attempt to compromise the AI tooling (attack path)"
+  },
+  "assets": {
+    "A1": {
+      "name": "Continuous supply of safe water",
+      "owner": "Residents and the local authority",
+      "why": "The article proposes measuring success by one question: did the service survive the attack.",
+      "loss": "A city without water, or with water it cannot drink, even if no data was stolen."
+    },
+    "A2": {
+      "name": "Integrity of the treatment process",
+      "owner": "Operations engineers",
+      "why": "Chemical dosing, pressures and flows decide whether the water is safe. A small settings change can be more dangerous than an outage.",
+      "loss": "A process that looks normal on screen and actually runs differently."
+    },
+    "A3": {
+      "name": "The utility's vulnerability map",
+      "owner": "Security team",
+      "why": "Scanning produces a list of everything still open. For defenders it is a work plan; for the attacker it is a map.",
+      "loss": "The list reaches an attacker before the weaknesses are closed."
+    },
+    "A4": {
+      "name": "Operators' trust in AI recommendations",
+      "owner": "Operations management",
+      "why": "A defence pipeline only works if operators trust it enough to act fast, and not so much that they stop checking.",
+      "loss": "Either real alerts are ignored, or every change is approved unread."
+    },
+    "A5": {
+      "name": "Code, firmware and operational data",
+      "owner": "The utility and its equipment vendors",
+      "why": "Some belongs to vendors, and some describes exactly how the plant is built. The article's proposal sends it to outside labs.",
+      "loss": "Details of the plant reaching people who should not hold them."
+    }
+  },
+  "threats": {
+    "S1": {
+      "title": "An attacker poses as an operator with a real account",
+      "desc": "The attacker does not break in. They log in with a technician's username and password and use management tools already on the network. This is living off the land, and from outside it looks like another working day.",
+      "evidence": "According to the article, Chinese state hackers use stolen credentials and legitimate tools, which older tools miss. (US government attribution; China denies.)"
+    },
+    "S2": {
+      "title": "A fake or compromised AI tool arrives from outside",
+      "desc": "If the tool that scans the code, or the model behind it, comes from an unverified source, whoever controls it sees all the code and can also decide what the tool 'does not find'. This is a supply chain, only of defensive tools.",
+      "evidence": "The article proposes enlisting AI labs to scan operators' code and firmware and produce fixes. It does not say how the tools themselves are vetted."
+    },
+    "T1": {
+      "title": "A wrong or malicious patch proposed by the AI",
+      "desc": "A patch is code that will run in the plant. A fix written fast can close one weakness and open another, or change a controller's behaviour in a way nobody intended. If the generator's input is poisoned, the patch can also be harmful on purpose.",
+      "evidence": "In DARPA's challenge the systems found 18 unknown vulnerabilities and fixed 11 of them: even in a controlled test, not every finding became a fix."
+    },
+    "T2": {
+      "title": "A twin that does not resemble the plant",
+      "desc": "The twin is built from data, and the plant changes: equipment is replaced, settings are edited by hand, a sensor breaks. A test that passes on a stale twin approves a change that was never really tested, and gives false confidence.",
+      "evidence": "The article presents the twin as a way to test defences without risking service, and notes attackers can only build crude approximations. The fidelity of the defenders' twin is an assumption, not a given."
+    },
+    "T3": {
+      "title": "Poisoned logs and telemetry",
+      "desc": "The AI learns what normal is from the logs, and the twin is built from the readings. Whoever can write to the historian can hide from monitoring, or teach the system that suspicious behaviour is normal.",
+      "evidence": "The article describes the defenders' advantage: they see their own traffic. That holds only as long as what they see is not altered on the way."
+    },
+    "R1": {
+      "title": "No record of who approved an AI-proposed change",
+      "desc": "If changes go live automatically, or with a shared account's approval, after a failure no one can reconstruct who decided, on what basis, and which version of the fix actually went live.",
+      "evidence": "The article stresses speed and set deadlines. It does not address who signs off on a machine-generated change."
+    },
+    "I1": {
+      "title": "The vulnerability list leaks before the fix",
+      "desc": "Good scanning produces a list of everything still open, sorted by severity. If it leaks, from the utility, the lab or a partner, the attacker gets a map exactly while the weaknesses are still open.",
+      "evidence": "The article itself asks for findings to be shared through coordinated disclosure, so fixes do not tip off attackers before systems are patched."
+    },
+    "I2": {
+      "title": "Sensitive code and firmware go to an outside lab",
+      "desc": "For a lab to scan code, it has to receive it. A water plant's code and firmware describe exactly how the plant is built, and some of it belongs to vendors who did not agree to share it.",
+      "evidence": "The article's proposal is for AI labs to find flaws in operators' code or firmware."
+    },
+    "D1": {
+      "title": "Silent shutdown at a moment of conflict",
+      "desc": "Pre-positioning means the attacker is already inside and doing nothing, until the day they decide to disrupt. Denial of service here is physical: pumps that stop, pressure that drops.",
+      "evidence": "According to the article, Chinese state hackers have planted footholds in US power, water and transport systems, ready to strike in a conflict. In 2023 water operators switched to manual control after an intrusion. (US government attribution; China denies.)"
+    },
+    "D2": {
+      "title": "Flooding the monitoring with alerts",
+      "desc": "AI lets an attacker try every door all the time. Every attempt is an alert. With thousands of alerts a day the team stops reading: denial of service against the defence, not shutting it down but drowning it.",
+      "evidence": "The article describes attackers jiggling every digital door-knob continuously and at scale, and proposes measuring success by how fast threats are contained."
+    },
+    "E1": {
+      "title": "The patch pipeline as an authorised back door",
+      "desc": "The system that deploys fixes is allowed to write to controllers. Whoever takes it over does not need to break into the plant: they already go through the official route, signed by the defensive tooling. The more automatic the pipeline, the more that privilege is worth.",
+      "evidence": "Our inference from the proposal: AI-generated patches and workarounds are tested on the twin and then go to live equipment. The article does not describe who protects that route."
+    },
+    "E2": {
+      "title": "The AI gains deployment rights without anyone deciding",
+      "desc": "A fixed deadline and a small, understaffed utility create pressure to skip approval. The generator quietly moves from 'proposes' to 'executes' without a discussion, a decision or a document. Privilege escalation that happens in the process, not in code.",
+      "evidence": "The article proposes set deadlines for fixes, and notes AI is cheap enough for small, understaffed utilities to use."
+    }
+  },
+  "resNotes": {
+    "S1": "Remote access through a single point with phishing-resistant authentication, plus behavioural monitoring, lower likelihood. Impact is unchanged: someone inside can do the same harm.",
+    "T1": "Twin testing, two-person approval and staged rollout with rollback. Impact drops because a bad change stops after one controller, not all of them.",
+    "T2": "Regular comparison of the twin with real measurements reveals drift. Staged rollout limits the damage when drift is missed anyway.",
+    "D1": "Monitoring lowers the chance the attacker stays inside. The ability to switch to manual control lowers impact, because the service survives even if the controllers do not.",
+    "D2": "AI triage of alerts helps, but the attacker uses AI too. This is the threat that drops least.",
+    "E1": "Impact stays at the maximum by definition: this is the most privileged component. What drops is likelihood, thanks to two-person approval, network separation and staged rollout."
+  },
+  "tree": {
+    "root": "Physical disruption of water supply",
+    "A": "Direct intrusion into the operational network",
+    "A1": "Gain access",
+    "A1a": "A technician's real account, via remote access",
+    "A1b": "A known, still unpatched weakness in old equipment",
+    "A2": "Operate long enough without being noticed",
+    "A3": "Disrupt without operators switching to manual control",
+    "B": "Through the defence pipeline: a harmful change that goes live as a fix",
+    "B1": "Get a harmful change into the pipeline",
+    "B1a": "A compromised AI tool, or poisoned input to the generator",
+    "B1b": "A twin that does not resemble the plant approves the change",
+    "B2": "The change reaches the controllers with no human stopping it",
+    "insight": "AI-generated fixes (M3) alone close no branch, because attackers can also enter with a real account, which is exactly what the article says about most attacks. What closes everything is two controls: one that sees the intruder or lets the service survive it (M2 or M10), and one that keeps a human between the AI and the controllers (M4). The control that matters most here is not in the article."
+  },
+  "mitigations": {
+    "M1": {
+      "name": "AI code and firmware scanning, from the inside",
+      "owner": "Security team, or a lab under a government programme",
+      "desc": "Code and firmware are scanned line by line from every angle of attack, before an outsider finds the same weaknesses. This is the advantage the article gives defenders: they see the code, the attacker does not.",
+      "limit": "Finds weaknesses, does not fix them. Produces a sensitive list that must itself be protected (I1)."
+    },
+    "M2": {
+      "name": "AI anomaly detection and alert triage",
+      "owner": "Monitoring team",
+      "desc": "Monitoring that learns the normal behaviour of users and tools on the network and flags a real account that behaves differently. Also ranks alerts so the team reads the important ones first.",
+      "limit": "Depends on clean logs (T3), and a patient attacker who behaves like an employee can hide for a while."
+    },
+    "M3": {
+      "name": "Targeted patch or workaround, tested on the twin",
+      "owner": "Operations and security teams",
+      "desc": "A code fix for each weakness; for equipment that cannot be updated, a targeted workaround such as a firewall rule or a settings change. Each is tested on the twin before going live.",
+      "limit": "Closes weaknesses, not stolen accounts. Without M4 and M8 it is itself a source of untested changes."
+    },
+    "M4": {
+      "name": "Two-person approval for every change to the operational network",
+      "owner": "Operations management",
+      "desc": "The AI proposes, a human decides. Every change that reaches the controllers needs two human approvers, neither of whom wrote it, and the AI's service account cannot approve. Every approval is recorded in a signed log with the hash of what went live. Separation of duties between the machine and the plant. See the sample rule.",
+      "limit": "Slows deployment and needs two qualified people, which not every small utility has. Without cost support, this is the first control to be skipped."
+    },
+    "M5": {
+      "name": "Staged rollout with rollback",
+      "owner": "Operations team",
+      "desc": "A change goes first to one controller or one site, is checked against real measurements, and only then continues. Every change has a rollback prepared in advance.",
+      "limit": "Not every change can be staged, and an urgent weakness will create pressure to skip."
+    },
+    "M6": {
+      "name": "Network separation and remote access through a single point",
+      "owner": "Infrastructure team",
+      "desc": "The operational network is separated from the office network, and all remote access goes through one point with phishing-resistant authentication and session recording. A stolen password is not enough, and the patch pipeline is not open to everyone on the IT network.",
+      "limit": "Does not help against someone already inside, or against misuse of authorised access."
+    },
+    "M7": {
+      "name": "Supply chain of the AI tooling",
+      "owner": "Procurement and security, required by the regulator",
+      "desc": "Signed tools and models from a verified source, running in the utility's own isolated environment where possible, under an agreement on what leaves, what the lab keeps and when it is deleted.",
+      "limit": "The utility cannot check for itself what the model learned. Trust in the lab remains trust."
+    },
+    "M8": {
+      "name": "Cross-checking data and the twin against independent measurement",
+      "owner": "Operations engineers",
+      "desc": "Regular comparison of the twin and the historian with measurements that do not travel over the same network: a manual reading, a separate sensor, a pump's power draw. A gap flags both a stale twin and altered data.",
+      "limit": "Catches large drift, not a small, calculated change. Needs regular manual work."
+    },
+    "M9": {
+      "name": "Coordinated disclosure with partners",
+      "owner": "Security team and regulator",
+      "desc": "Findings go to partners and vendors under a procedure that fixes in advance who gets what and when, so a discovery in one country strengthens everyone running the same technology without tipping off attackers.",
+      "limit": "The more partners receive it, the more places it can leak from."
+    },
+    "M10": {
+      "name": "Ability to switch to manual control, and regular drills",
+      "owner": "Operations management",
+      "desc": "A procedure and people who can run the plant without the controllers, and drills of it. The article proposes expanding NATO's Locked Shields exercise to include AI-generated patches and controls.",
+      "limit": "Manual control holds for a limited time and at lower capacity. It buys time; it does not solve."
+    }
+  },
+  "types": {
+    "prevent": "Prevent",
+    "detect": "Detect",
+    "respond": "Respond"
+  },
+  "sources": {
+    "report": "In the article",
+    "ours": "Our proposal"
+  },
+  "ruleTitle": "Sample detection rule (M4)",
+  "ruleIntro": "A daily check that no change reached the controllers without the full gate. SQL-style pseudocode; the schema is illustrative only.",
+  "ruleNote": "The rule does not test whether the fix is good. It tests whether the gate held: the exact artifact that passed on the twin, and two people who are not the author. That is what keeps it useful even when the AI itself wrote the change.",
+  "residual": "Even with all ten controls, three things remain. First, a patient attacker with a real account can still hide for a while; monitoring shortens that time, it does not remove it. Second, the twin is a model, not the plant, so testing on it always leaves a gap. Third, a small utility may not find two qualified approvers, and without them M4 stays on paper; the government cost-sharing the article proposes is what makes it feasible. This residual risk is effectively accepted by the utility's board, which decides how much automation is allowed, and by the regulator, which sets the deadlines.",
+  "attack": {
+    "intro": "MITRE ATT&CK for Industrial Control Systems (ICS) applies directly here, because this is a real cyber system. What does not map is just as interesting: the threats to the AI pipeline itself.",
+    "T0859": "Logging in with a real technician or operator account instead of exploiting a weakness.",
+    "T0886": "Using the remote services the utility itself runs to reach the operational network.",
+    "T0826": "The outcome the article warns about: systems that stop delivering the service at a moment of conflict.",
+    "T0856": "Readings and logs that look normal but do not reflect reality, misleading both operators and the AI.",
+    "T0862": "Compromise of software that comes from outside. Here: the AI tools and models that enter the defence pipeline.",
+    "T1562": "Weakening a defence without turning it off. Here: flooding monitoring with alerts until no one reads them.",
+    "caveat": "Three threats stay unmapped: a wrong AI patch (T1), a twin that does not resemble the plant (T2), and deployment rights that grow without a decision (E2). These are not attacker techniques but defender failures. The catalogue for attacks on AI systems themselves is MITRE ATLAS, and a full model of such a pipeline should use it too."
+  },
+  "takeaways": [
+    {
+      "kind": "Technology",
+      "text": "AI-generated fixes are a real improvement, but in the attack tree they close no branch on their own. What closes the main threat is monitoring or the ability to survive, plus one human between the machine and the controllers."
+    },
+    {
+      "kind": "Technology",
+      "text": "A digital twin is both a test tool and a dependency. A test that passes on a stale twin gives false confidence, so its resemblance to the plant must be measured, not assumed."
+    },
+    {
+      "kind": "People",
+      "text": "The dangerous moment is not when someone decides to let the AI deploy on its own, but when it happens without anyone deciding: a deadline approaching, a small team, and an approval that has become a ritual."
+    },
+    {
+      "kind": "Practice",
+      "text": "When you add a defensive system, threat-model it too. Here 8 of the 12 threats sit on the five components meant to defend, and two of the five assets exist because of them."
+    }
+  ],
+  "glossary": {
+    "threat-model": "A document describing a system, what can go wrong in it, and the controls. Done before launch or after major change, while fixes are still cheap.",
+    "dfd": "Data-flow diagram: external entities, processes, data stores and flows. It shows what moves between whom, not how each part is built.",
+    "trust-boundary": "A line where data or control passes between parties with different levels of trust. Most threats sit on these lines.",
+    "stride": "Microsoft's six threat categories: Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege.",
+    "attack-tree": "A diagram with the attacker's goal at the root and the ways to reach it below. OR: any child suffices. AND: all children are needed.",
+    "risk-matrix": "Likelihood against impact, each 1-5. The product sets priority. The scores are estimates, not measurements.",
+    "residual-risk": "The risk that remains after all proposed controls work, and who accepts it.",
+    "mitre-attack": "An open catalogue of attacker techniques with IDs, used as a shared language by defenders. Its ICS edition uses IDs starting with T0.",
+    "critical-infrastructure": "Systems society cannot function without: power, water, fuel pipelines, transport. Damage to them is physical harm to people, not only data loss.",
+    "ot": "Operational technology: the computers that run physical equipment, such as PLCs and SCADA. Much of it is old and runs for years without updates.",
+    "digital-twin": "A virtual replica of a physical system built from its operational data, used to try changes without risking the real system. Only as good as the data that built it.",
+    "exploit": "Code or a method that abuses a software flaw to make it do what it was not designed to do. Mentioned here only as a concept.",
+    "patch": "A code change that closes a weakness. In operational settings installing one can require stopping equipment, so many patches wait for months.",
+    "compensating-control": "A control that does not fix the weakness but prevents reaching it when a fix is impossible, e.g. a firewall rule in front of old equipment.",
+    "living-off-the-land": "An attacker using real accounts and tools already installed on the network instead of bringing malware, so it looks like normal administration.",
+    "pre-positioning": "A quiet intrusion that does no harm now, so access is ready for the day the attacker wants to disrupt.",
+    "coordinated-disclosure": "A procedure for publishing a weakness: notify those who must fix it first, give them time, and publish only afterwards.",
+    "ransomware": "Malware that encrypts the victim's files and demands payment to release them, sometimes with a threat to publish stolen data.",
+    "separation-of-duties": "No single person, or system, both performs a sensitive action and approves it."
+  },
+  "sections": {
+    "meta": "Document information",
+    "summary": "Summary",
+    "context": "Context",
+    "scope": "Scope",
+    "inScope": "In scope",
+    "outScope": "Out of scope",
+    "model": "System model",
+    "components": "Components",
+    "flows": "Data flows",
+    "boundaries": "Trust boundaries",
+    "assets": "Assets",
+    "threats": "Threats (STRIDE per element)",
+    "tree": "Attack tree for the main threat",
+    "risk": "Risk before and after controls",
+    "mitigations": "Controls",
+    "residual": "Residual risk",
+    "attack": "Mapping to MITRE ATT&CK",
+    "takeaways": "Takeaways",
+    "glossary": "Appendix: glossary",
+    "claims": "Facts and claims"
+  },
+  "labels": {
+    "system": "System",
+    "method": "Method",
+    "status": "Status",
+    "date": "Source date",
+    "id": "Item",
+    "id_col": "ID",
+    "name": "Name",
+    "type": "Type",
+    "zone": "Boundary",
+    "desc": "Description",
+    "from": "From",
+    "to": "To",
+    "flow": "Flow",
+    "owner": "Owner",
+    "value": "Importance",
+    "why": "Why it matters",
+    "loss": "If lost",
+    "cat": "STRIDE",
+    "component": "Component",
+    "threat": "Threat",
+    "evidence": "Basis in the article",
+    "l": "L",
+    "i": "I",
+    "risk": "Risk",
+    "controls": "Controls",
+    "before": "Before",
+    "after": "After",
+    "note": "Note",
+    "covers": "Covers",
+    "limit": "Limitation",
+    "source": "Source",
+    "technique": "Technique",
+    "where": "Where it appears",
+    "gateOr": "OR",
+    "gateAnd": "AND",
+    "legal": "legal today",
+    "term": "Term",
+    "levels": {
+      "5": "Critical",
+      "4": "High",
+      "3": "Medium",
+      "2": "Low-medium",
+      "1": "Low"
+    },
+    "diagram": "Figure 1. Data-flow diagram with trust boundaries. Dashed red flows are concept-level attack paths; the purple flow is pressure, not data."
+  },
+  "source": "Based on reporting in The Economist, November 14th 2026 (\"Anne Neuberger on how to use AI for national security\", By Invitation, opinion). The utility in the model is fictional; the scores, controls and conclusions are our educational analysis."
+}

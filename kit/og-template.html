@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>OG</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  /* Desk Open Graph card, 1200×630. Filled by tools/og.py via window.fill({...}). */
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+  body{--bg:#0f1115;--ink:#eceef1;--muted:#a4abb7;--accent:#ff8a4c;--line:#2a2f38;
+       background:var(--bg);color:var(--ink);font-family:Heebo,Arial,sans-serif;position:relative}
+  .frame{position:absolute;inset:48px 64px;display:flex;flex-direction:column}
+  .top{display:flex;justify-content:space-between;align-items:center;font:600 22px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;color:var(--muted)}
+  .site{color:var(--accent)}
+  .badge{border:2px solid var(--accent);color:var(--accent);padding:8px 14px;border-radius:10px}
+  h1{font:700 72px/1.12 "Frank Ruhl Libre",serif;margin:auto 0 18px;max-width:1000px}
+  .sub{font:400 32px/1.45 Heebo,sans-serif;color:var(--muted);max-width:980px}
+  .foot{margin-top:28px;padding-top:20px;border-top:2px solid var(--line);display:flex;justify-content:space-between;font:500 22px/1 Heebo;color:var(--muted)}
+  .stripe{position:absolute;inset:0 0 auto 0;height:10px;background:var(--accent)}
+</style>
+</head>
+<body>
+  <div class="stripe" id="stripe"></div>
+  <div class="frame">
+    <div class="top"><span class="site" id="site">DESK</span><span class="badge" id="badge"></span></div>
+    <h1 id="title">כותרת</h1>
+    <div class="sub" id="sub"></div>
+    <div class="foot"><span id="left"></span><span id="right" dir="ltr"></span></div>
+  </div>
+<script>
+window.fill=function(o){for(var k in o){var el=document.getElementById(k);if(el)el.textContent=o[k]}
+  if(o.accent){document.body.style.setProperty("--accent",o.accent)}
+  if(!o.badge)document.getElementById("badge").style.display="none";
+  return document.fonts.ready.then(function(){return true})};
+</script>
+</body>
+</html>

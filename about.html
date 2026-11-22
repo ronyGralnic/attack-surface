@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Paste as the FIRST thing in <head> to avoid a light/dark flash -->
+<script>(function(){var t;try{t=localStorage.getItem("desk-theme")}catch(e){}document.documentElement.setAttribute("data-theme",t||(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"))})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>אודות · Attack Surface</title>
+<meta name="description" content="מה זה Attack Surface, איך נבנה כל מודל איומים, ומה הגבולות שלו.">
+<meta property="og:title" content="אודות · Attack Surface">
+<meta property="og:image" content="https://ronygralnic.github.io/attack-surface/assets/og.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">דילוג לתוכן</a>
+<header class="site-header"><div class="wrap-wide bar">
+  <a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 26 26" fill="none" aria-hidden="true"><rect class="bd" x="1.5" y="1.5" width="23" height="23" rx="5" stroke-width="1.6"/><circle class="ring" cx="13" cy="13" r="6" stroke-width="1.6"/><circle class="core" cx="13" cy="13" r="2.4"/><path class="ring" d="M13 1.5v5M13 19.5v5M1.5 13h5M19.5 13h5" stroke-width="1.6"/></svg><span dir="ltr">Attack Surface</span><small>מודלים של איומים מתוך החדשות</small></a>
+  <nav class="nav" aria-label="ראשי"><a href="index.html">פריטים</a><a href="about.html" aria-current="page">אודות</a></nav>
+  <button type="button" class="icon-btn theme-toggle" aria-label="מצב כהה"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main id="main" class="wrap about">
+  <section>
+    <p class="kicker">אודות</p>
+    <h1>מה זה <span dir="ltr">Attack Surface</span></h1>
+    <p class="lede">אתר אחד מתוך Desk: פריטים מקצועיים שנבנים מסיפורים בחדשות. כאן הפורמט הוא מודל איומים (Threat Model), הכלי שצוותי אבטחה משתמשים בו כדי לחשוב על מה יכול להשתבש לפני שזה קורה.</p>
+
+    <h2>איך נבנה פריט</h2>
+    <p>לוקחים מערכת שמופיעה בדיווח, ולא תמיד מערכת מחשב: שרשרת אספקה, תהליך רישוי, קשר בין אנשים. משרטטים אותה כדיאגרמת זרימת נתונים, מסמנים את גבולות האמון, ועוברים על כל רכיב עם שש השאלות של STRIDE. אחר כך בונים עץ תקיפה למטרה המרכזית, מדרגים סיכון ומציעים הגנות.</p>
+    <p>כל איום מקבל שורת "בסיס בדיווח" שמראה על מה הוא נשען. טענות שלא הוכחו מסומנות כטענות, ואם מי שהואשם מכחיש, ההכחשה כתובה לידן. הדירוגים הם הערכה שלנו, והם כתובים כך.</p>
+
+    <h2>מה אין כאן</h2>
+    <ul>
+      <li>אין פרטי ניצול, קוד תקיפה או הוראות. האיומים מתוארים ברמת המושג, כמו שהם מופיעים במסמך הגנה.</li>
+      <li>אין קביעה עובדתית על אנשים או חברות. זה ניתוח לימודי של מערכת, לא כתב אישום.</li>
+      <li>אין העתקה של הדיווח. התקציר כתוב במילים שלנו, ובכל פריט יש לכל היותר ציטוט קצר אחד.</li>
+    </ul>
+
+    <h2>מילון קצר</h2>
+    <p><b>גבול אמון:</b> הקו שבו נתונים או שליטה עוברים מגורם אחד לגורם אחר שאין לו אותה רמת אמון. רוב האיומים נמצאים בדיוק שם.</p>
+    <p><b>סיכון שיורי:</b> מה שנשאר אחרי שכל ההגנות המוצעות פועלות. מודל טוב אומר אותו בקול.</p>
+
+    <h2>טכני</h2>
+    <p>אתר סטטי ב-GitHub Pages, בלי ספריות צד שלישי. עובד גם כשפותחים את הקבצים ישירות מהדיסק. מדידת ביקורים אנונימית ב-GoatCounter, רק בכתובת הציבורית.</p>
+  </section>
+</main>
+<footer class="site-footer"><div class="wrap-wide">
+  <p><span dir="ltr">Attack Surface</span> · חלק מ-Desk.</p>
+  <p><a href="index.html">כל הפריטים</a></p>
+</div></footer>
+<script src="kit/kit.js"></script>
+<script>Desk.goat("attack-surface",".github.io")</script>
+</body>
+</html>

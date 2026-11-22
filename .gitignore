@@ -1,0 +1,5 @@
+interview/
+__pycache__/
+*.pyc
+.DS_Store
+items/*/_doc-*.html
