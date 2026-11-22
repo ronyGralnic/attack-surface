@@ -141,12 +141,15 @@
           s("path", {d:"M0 0L10 5L0 10z", style:"fill:" + m[1]})));
       });
       svg.append(defs);
+      // zone labels live in their own layer above the flows (with a halo), so a line never cuts through a label
+      var labelsG = s("g", {class:"zone-labels"});
       d.boundaries.forEach(function(b){
         var g = L.zones[b.id]; if (!g) return;
         var z = s("g", {class:"zone" + (b.inner ? " inner" : "")},
-          s("rect", {x:g.x, y:g.y, width:g.w, height:g.h, rx:14}),
-          s("text", {x:g.lx, y:g.ly, "text-anchor":g.anchor || "start", direction:"rtl"}, b.label));
+          s("rect", {x:g.x, y:g.y, width:g.w, height:g.h, rx:14}));
         svg.append(z);
+        labelsG.append(s("g", {class:"zone" + (b.inner ? " inner" : "")},
+          s("text", {class:"zone-label", x:g.lx, y:g.ly, "text-anchor":g.anchor || "start", direction:"rtl"}, b.label)));
       });
       var nw = L.nw, nh = L.nh;
       var flowsG = s("g"), nodesG = s("g");
@@ -195,7 +198,7 @@
         g.addEventListener("mouseleave", function(){ if (!state.node) hiNode(null); });
         nodesG.append(g);
       });
-      svg.append(flowsG, nodesG);
+      svg.append(flowsG, labelsG, nodesG);
       holder.innerHTML = ""; holder.append(svg); svgEl = svg;
       mark();
     }

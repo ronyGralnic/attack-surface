@@ -1,7 +1,10 @@
-feat(attack-surface): launch site with first threat model (2026-11-14-44)
+feat(items): add threat model 2026-11-14-08, the AI defence pipeline of a water utility
 
-- engine: home with STRIDE explainer and filtered gallery, about page, item template
-- item renderer: interactive DFD (wide/tall layouts), assets, STRIDE heat table + threat cards,
-  attack tree with control toggles and minimal-cut, before/after risk matrix, controls, ATT&CK mapping
-- tools: build_item (validates JSON, writes data.js for file://), og, build_docs (he/en docx+pdf), check
-- item 2026-11-14-44: AI-chip export controls after the Megaspeed allegations (11 threats, 8 controls)
+- item 2026-11-14-08: Anne Neuberger's case for AI in critical-infrastructure defence,
+  modelled on a fictional water utility; 12 threats (8 on the defensive pipeline), 10 controls,
+  attack tree with a 2-control minimal cut (M2 or M10 + M4), sample two-person-gate detection rule
+- fix(build_docs): Hebrew summary came from the first item (now item.json "docSummary");
+  source date was hard-coded (now from item.json "date")
+- fix(build_docs): English diagram used the first item's zone ids, leaving labels empty on new items
+- fix(dfd): zone labels drawn above flows with a background halo, so lines never cut through them
+- feat(build_item): rebuild_index keeps index entries for items not present in the checkout (overlay builds)

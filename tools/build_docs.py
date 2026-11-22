@@ -45,6 +45,17 @@ HE = {
 }
 
 
+
+HE_MONTHS = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"]
+EN_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
+def src_date(iso, he):
+    """Source date from item.json (was hard-coded to the first item's date)."""
+    y, m, d = (int(x) for x in iso.split("-"))
+    return f"{d} ב{HE_MONTHS[m-1]} {y}" if he else f"{d} {EN_MONTHS[m-1]} {y}"
+
+
 def plain(s):
     """Strip site markup: [[id|label]] -> label, [[id]] -> id's term handled by caller, **x** stays for rich runs."""
     return re.sub(r"\[\[[a-z0-9\-]+\|([^\]]+)\]\]", r"\1", s or "")
@@ -84,11 +95,13 @@ def model(it, en, lang):
         [L["system"], R(it["facts"][0]["v"]) if he else en["facts"][0]["v"]],
         [L["method"], HE["method"] if he else en["method"]],
         [L["status"], HE["status"] if he else en["status"]],
-        [L["date"], "14 בנובמבר 2026" if he else "14 November 2026"],
+        [L["date"], src_date(it["date"], he)],
     ], {"kv": True}))
     B.append(("note", R(it["defensiveNote"]) if he else en["defensiveNote"].replace("Defensive only.", "**Defensive only.**", 1)))
     B.append(("h2", S["summary"]))
-    if he:
+    if he and it.get("docSummary"):
+        B.append(("p", R(it["docSummary"])))
+    elif he:  # fallback: the first item's summary, kept so 2026-11-14-44 rebuilds unchanged
         B.append(("p", "המשטר שומר על גבול אמון אחד: הגבול של המדינה המוגבלת. הבדיקות שלו סופרות חומרה ומסמכים. המודל מוצא " + str(len(it["threats"])) +
                   " איומים בכל שש הקטגוריות של STRIDE. את מסלול ההסטה הפיזית אפשר לסגור בכמה דרכים, כי כל אות זיהוי חזק לבד (ביקורת פתע עצמאית, אימות מיקום מהשבב, ניתוח נתוני סחר) שובר אותו. מסלול ההשכרה מרחוק שונה: החומרה לא זזה, כל הספירות נשארות נכונות, ורק חובת הכרת לקוח לשוכרי כוח חישוב מטפלת בו. הצעות החוק שבדיווח מכסות הסטה, לא השכרה. הרכיב עם הכי הרבה איומים הוא לא שרת אלא ההנהלה הבכירה, שם קשר אישי עם מנהלת אצל לקוח (שנבדק עכשיו כחשד למאמץ מודיעיני) מבטל את הפרדת התפקידים."))
     else:
@@ -438,8 +451,13 @@ def capture_dfd(page, item_id, en):
                 if (t[0]) { t[0].textContent = n.label; t[0].setAttribute('direction','ltr'); }
                 if (t[1]) { t[1].textContent = n.sub; t[1].setAttribute('direction','ltr'); }
               });
-              const ids = ['us','transit','customer','restricted'];
-              svg.querySelectorAll('.zone text').forEach((t, i) => { t.textContent = en.boundaries[ids[i]]; t.setAttribute('direction','ltr'); t.setAttribute('text-anchor','end'); });
+              // zone labels follow the item's own boundary order (was hard-coded to the first item's ids)
+              const ids = window.DESK_ITEM.dfd.boundaries.map(b => b.id);
+              svg.querySelectorAll('.zone text').forEach((t, i) => {
+                t.textContent = en.boundaries[ids[i]] || t.textContent; t.setAttribute('direction','ltr');
+                // keep the same visual side: rtl "start" is the right edge, ltr "end" is the right edge
+                t.setAttribute('text-anchor', (t.getAttribute('text-anchor') || 'start') === 'end' ? 'start' : 'end');
+              });
             }""", en)
         page.wait_for_timeout(200)
         page.locator("svg.dfd").screenshot(path=str(ROOT / "items" / item_id / f"dfd-{lang}.png"))

@@ -92,6 +92,13 @@ def rebuild_index():
     items = []
     for p in sorted(ITEMS.glob("*/item.json")):
         items.append(entry(json.loads(p.read_text(encoding="utf-8"))))
+    # Keep entries of items that are not in this checkout (overlay builds ship only the new item folder).
+    have = {e["id"] for e in items}
+    old = ITEMS / "index.json"
+    if old.exists():
+        for e in json.loads(old.read_text(encoding="utf-8")).get("items", []):
+            if e["id"] not in have and not (ITEMS / e["id"] / "item.json").exists():
+                items.append(e)
     items.sort(key=lambda e: (e["issue"], e["id"]), reverse=True)
     idx = {"site": "attack-surface", "format": "TM", "items": items}
     (ITEMS / "index.json").write_text(json.dumps(idx, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
