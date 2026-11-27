@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <!-- Paste as the FIRST thing in <head> to avoid a light/dark flash -->
-<script>(function(){var t;try{t=localStorage.getItem("desk-theme")}catch(e){}document.documentElement.setAttribute("data-theme",t||(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"))})();</script>
+<script>(function(){var t;try{t=localStorage.getItem("desk-theme")}catch(e){}document.documentElement.setAttribute("data-theme",t||"dark")})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Attack Surface · מודלים של איומים מתוך החדשות</title>
@@ -26,40 +26,39 @@
 </div></header>
 
 <main id="main">
-  <section class="wrap hero">
-    <div class="tb-frame">
-      <span class="tb-label" dir="ltr">trust boundary</span>
-      <p class="kicker" dir="ltr" style="text-align:right">Threat models · defensive only</p>
-      <h1>כל מערכת היא<br>משטח תקיפה.</h1>
-      <p class="lede">כל פריט כאן לוקח מערכת אחת מתוך החדשות ושואל עליה את מה שצוות אבטחה היה שואל לפני השקה: מה זורם בה, איפה עובר גבול אמון, מה יכול להשתבש בכל רכיב, ומה הכי שווה לתקן קודם.</p>
-      <p class="muted small" style="margin:0">לא מדריך תקיפה. האיומים מתוארים ברמת המושג, וכל ניתוח נגמר בהגנות.</p>
+  <div class="classif" dir="ltr">TLP:CLEAR · <b>Defensive analysis only</b> · Threat models from the news</div>
+  <section class="wrap-wide hero" aria-labelledby="hero-h">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker" dir="ltr" style="text-align:right">Case files · threat models</p>
+        <h1 id="hero-h">כל מערכת היא<br><span class="hl">משטח תקיפה.</span></h1>
+        <p class="lede">כאן לוקחים מערכת אחת מהחדשות, ובודקים אותה כמו צוות אבטחה לפני השקה. ארבע שאלות, תמיד באותו סדר:</p>
+        <ol class="qsteps" id="qsteps">
+          <li data-s="1"><button type="button"><span class="n" dir="ltr">01</span><span><b>מה זורם?</b><span class="s">מי מדבר עם מי, ומה עובר ביניהם.</span></span></button></li>
+          <li data-s="2"><button type="button"><span class="n" dir="ltr">02</span><span><b>איפה הגבול?</b><span class="s">איפה עוברים ממי שסומכים עליו למי שלא.</span></span></button></li>
+          <li data-s="3"><button type="button"><span class="n" dir="ltr">03</span><span><b>מה יכול להישבר?</b><span class="s">שש שאלות קבועות על כל רכיב.</span></span></button></li>
+          <li data-s="4"><button type="button"><span class="n" dir="ltr">04</span><span><b>מה מתקנים קודם?</b><span class="s">ההגנות שסוגרות הכי הרבה בהכי מעט.</span></span></button></li>
+        </ol>
+        <p class="def"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--accent);flex:none"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>לא מדריך תקיפה. האיומים מתוארים ברמת המושג, וכל תיק נגמר בהגנות.</span></p>
+      </div>
+      <div class="hud" style="padding:12px"><svg class="sys s1" id="sys" viewBox="0 0 460 400" role="img" aria-label="המחשה: מערכת קטנה עם משתמש, שרת, מאגר וספק. השלב המודגש משתנה לפי השאלה."></svg></div>
     </div>
   </section>
 
-  <section class="wrap" aria-labelledby="stride-h">
-    <div class="sec-head"><span class="no">S·T·R·I·D·E</span><h2 id="stride-h">שש שאלות לכל רכיב</h2></div>
-    <p class="sec-intro">STRIDE היא רשימת בדיקה שפותחה במיקרוסופט. היא לא מנחשת איומים, היא מכריחה לשאול שש שאלות קבועות על כל רכיב בדיאגרמה. לחצו על אות.</p>
-    <div class="stride-tiles" id="stride-tiles"></div>
-    <div class="callout stride-explain" id="stride-explain" aria-live="polite"><p>בחרו אות כדי לראות את השאלה, את ההגנה הקלאסית, ואת הפריטים באתר שבהם היא מופיעה.</p></div>
+  <section class="wrap-wide sec" aria-labelledby="stride-h">
+    <div class="sec-head"><span class="no" dir="ltr">S · T · R · I · D · E</span><h2 id="stride-h">שש שאלות לכל רכיב</h2></div>
+    <p class="sec-intro">STRIDE היא רשימת בדיקה שפותחה במיקרוסופט. היא לא מנחשת איומים: היא מכריחה לשאול את אותן שש שאלות על כל רכיב בדיאגרמה. כל אות היא סוג של כשל, ולכל סוג יש הגנה קלאסית.</p>
+    <div class="stride6" id="stride6"></div>
   </section>
 
-  <section class="wrap" aria-labelledby="how-h">
-    <div class="sec-head"><span class="no">איך לקרוא</span><h2 id="how-h">שבעה צעדים בכל פריט</h2></div>
-    <ol class="steps">
-      <li><b>הדיאגרמה.</b> מי משתתף, מה זורם ביניהם, ואיפה עובר גבול אמון. לחיצה על רכיב מציגה את האיומים שלו.</li>
-      <li><b>הנכסים.</b> מה בכלל שווה הגנה, ולמי.</li>
-      <li><b>טבלת STRIDE.</b> רכיבים מול שש קטגוריות, עם כרטיס לכל איום ובסיס בדיווח.</li>
-      <li><b>עץ תקיפה.</b> הדרכים להגיע למטרה המרכזית. מפעילים הגנות ורואים אילו מסלולים נסגרים.</li>
-      <li><b>מטריצת סיכון.</b> סבירות מול השפעה, לפני ואחרי ההגנות.</li>
-      <li><b>הגנות וסיכון שיורי.</b> מה מכסה מה, ומה נשאר פתוח גם אחרי הכל.</li>
-      <li><b>מסמך להורדה.</b> אותו מודל כמסמך עבודה, בעברית ובאנגלית.</li>
-    </ol>
+  <section class="wrap-wide sec" aria-labelledby="how-h">
+    <div class="sec-head"><span class="no" dir="ltr">Method</span><h2 id="how-h">שבעה צעדים בכל תיק</h2></div>
+    <p class="sec-intro">כל תיק בנוי באותו סדר. אחרי שניים-שלושה תיקים אפשר לעשות את זה לבד, על כל מערכת.</p>
+    <ol class="path7" id="path7"></ol>
   </section>
 
-  <section class="wrap-wide" aria-labelledby="items-h" id="items">
-    <div class="wrap" style="padding:0">
-      <div class="sec-head"><span class="no">הפריטים</span><h2 id="items-h">מודלים של איומים</h2></div>
-    </div>
+  <section class="wrap-wide sec" aria-labelledby="items-h" id="items">
+    <div class="sec-head"><span class="no" dir="ltr">Case files</span><h2 id="items-h">התיקים</h2></div>
     <div class="filters" id="filters"></div>
     <div class="gallery" id="gallery" aria-live="polite"></div>
   </section>

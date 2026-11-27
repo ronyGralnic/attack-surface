@@ -1,10 +1,17 @@
-feat(items): add threat model 2026-11-14-08, the AI defence pipeline of a water utility
+feat(site): v2 "night dossier" redesign, built for one-pass learning
 
-- item 2026-11-14-08: Anne Neuberger's case for AI in critical-infrastructure defence,
-  modelled on a fictional water utility; 12 threats (8 on the defensive pipeline), 10 controls,
-  attack tree with a 2-control minimal cut (M2 or M10 + M4), sample two-person-gate detection rule
-- fix(build_docs): Hebrew summary came from the first item (now item.json "docSummary");
-  source date was hard-coded (now from item.json "date")
-- fix(build_docs): English diagram used the first item's zone ids, leaving labels empty on new items
-- fix(dfd): zone labels drawn above flows with a background halo, so lines never cut through them
-- feat(build_item): rebuild_index keeps index entries for items not present in the checkout (overlay builds)
+- style: dark-by-default identity (scanlines, grain, HUD frames, redaction reveals, TLP bar);
+  light theme as classified paper; no letter-spacing on Hebrew anywhere
+- feat(item): story-in-a-minute scenes per paragraph (route, stats, timeline, versus, chat) and a fictional cast
+- feat(item): guided DFD build with a camera that follows each step, in-frame inspector, clickable legend
+- feat(item): assets vault with owners' voices and a breach flip; STRIDE grouped by component with letter reminders
+- feat(item): attack tree as an org chart with animated minimal cut; twin risk matrices with floating detail
+- feat(item): coverage grid, detection rule terminal with line notes, ATT&CK tiles with an "unmapped" tile
+- feat(item): "method" strip in every section and a "build it yourself" recap computed from the data
+- feat(home): four-question animated hero, six STRIDE cards, seven-step path, case-file gallery
+- feat(docs): professional Threat Model document: document control, contents, executive summary with KPIs and
+  prioritised recommendations, methodology and scoring scales, threat register, figures (STRIDE distribution,
+  attack tree with minimal cut, before/after heat maps, per-threat risk reduction, coverage matrix), rule line notes
+- feat(og): dark case-file Open Graph cards
+- content(2026-11-14-08, 2026-11-14-44): shorter trailers, cast, scenes, DFD steps, owners' lines, rule notes, short tree labels
+- test(check): rewritten for the new interactions (261/261 per item)

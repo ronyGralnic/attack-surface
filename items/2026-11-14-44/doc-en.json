@@ -1,158 +1,444 @@
 {
-  "title": "Counting every chip, missing the route",
-  "subtitle": "A defensive threat model of the export-control regime for advanced AI chips, after the Megaspeed allegations reached the office of Nvidia's CEO",
-  "summary": "The control regime watches one trust boundary: the border of the restricted country. Its checks count hardware and paperwork. This model finds eleven threats across all six STRIDE categories. The physical diversion route can be closed in several ways, because any one strong detection signal (independent spot audits, on-chip location attestation, trade-data analytics) breaks it. The remote-rental route is different: the hardware never moves, so every count stays correct, and only know-your-customer duties on compute renters address it. The bills mentioned in the reporting cover diversion, not rental. The component with the most threats is not a server but senior management, where a personal relationship with a customer executive (now under board review as a possible foreign-intelligence effort) removes separation of duties.",
-  "status": "Educational analysis · draft for discussion",
-  "method": "STRIDE per element on a data-flow diagram, attack tree for the main threat, 5×5 likelihood/impact matrix",
-  "defensiveNote": "Defensive only. Threats are described at concept level, as in a defensive design document. Allegations are marked as allegations, with the denials next to them.",
-  "claimsNote": "The suspicions about Megaspeed, the claim that Alice Huang is an agent, and the question whether the CEO was an intelligence target are claims by officials and press reports. Megaspeed denies the allegations, China rejects the claim, and the board's review is not finished. This model does not decide who is right. It asks how the system should look so that the answer does not depend on trusting one person.",
-  "facts": [
-    {"k": "System", "v": "Export control of AI chips: sale, shipping, use and oversight"},
-    {"k": "Trust boundaries", "v": "4: US, transit country, customer, restricted country"},
-    {"k": "Main threat", "v": "Controlled compute reaches a restricted end user"},
-    {"k": "Source", "v": "The Economist, November 14th 2026"}
+ "title": "Counting every chip, missing the route",
+ "subtitle": "A defensive threat model of the export-control regime for advanced AI chips, after the Megaspeed allegations reached the office of Nvidia's CEO",
+ "summary": "The control regime watches one trust boundary: the border of the restricted country. Its checks count hardware and paperwork. This model finds eleven threats across all six STRIDE categories. The physical diversion route can be closed in several ways, because any one strong detection signal (independent spot audits, on-chip location attestation, trade-data analytics) breaks it. The remote-rental route is different: the hardware never moves, so every count stays correct, and only know-your-customer duties on compute renters address it. The bills mentioned in the reporting cover diversion, not rental. The component with the most threats is not a server but senior management, where a personal relationship with a customer executive (now under board review as a possible foreign-intelligence effort) removes separation of duties.",
+ "status": "Educational analysis · draft for discussion",
+ "method": "STRIDE per element on a data-flow diagram, attack tree for the main threat, 5×5 likelihood/impact matrix",
+ "defensiveNote": "Defensive only. Threats are described at concept level, as in a defensive design document. Allegations are marked as allegations, with the denials next to them.",
+ "claimsNote": "The suspicions about Megaspeed, the claim that Alice Huang is an agent, and the question whether the CEO was an intelligence target are claims by officials and press reports. Megaspeed denies the allegations, China rejects the claim, and the board's review is not finished. This model does not decide who is right. It asks how the system should look so that the answer does not depend on trusting one person.",
+ "facts": [
+  {
+   "k": "System",
+   "v": "Export control of AI chips: sale, shipping, use and oversight"
+  },
+  {
+   "k": "Trust boundaries",
+   "v": "4: US, transit country, customer, restricted country"
+  },
+  {
+   "k": "Main threat",
+   "v": "Controlled compute reaches a restricted end user"
+  },
+  {
+   "k": "Source",
+   "v": "The Economist, November 14th 2026"
+  }
+ ],
+ "minute": [
+  "Since October 2022 America has barred sales of its most advanced AI chips to China. According to the reporting, Chinese firms found two ways around the ban: renting compute from cloud providers abroad, or receiving chips through intermediaries in South-East Asia that move them onward.",
+  "Megaspeed, a Singapore neocloud that rents out AI processors, took its current name in 2023 and quickly became one of Nvidia's largest buyers in the region. American officials suspect it of operating on both routes and have investigated it since September 2024; the firm denies the allegations. A short-seller estimates that its Malaysian subsidiary imported about $4.6bn of goods over roughly 14 months, mostly servers with Nvidia chips.",
+  "On November 8th Nvidia's CEO, Jensen Huang, admitted an extramarital affair, after reports linked him to Alice Huang (no relation), a Megaspeed executive whom US officials believe to be a Chinese agent; China rejects the claim. Nvidia's board is investigating whether he was the target of a foreign-intelligence effort. Earlier, Nvidia had said its own checks found no diversion, and Mr Huang said the company had counted every one of Megaspeed's chips.",
+  "Bloomberg and the New York Times reported that Nvidia's general counsel intervened last year in the Commerce Department's investigation of Megaspeed; Nvidia says it regularly consults export-control officials to share knowledge. The White House was reportedly warned about the relationship at least twice. The board is reportedly preparing to oust Mr Huang, Congress has summoned him to a closed briefing, and stalled bills may revive, including one requiring exporters to show their chips were not diverted, for instance by verifying where they are."
+ ],
+ "scope": {
+  "in": [
+   "The path of a controlled AI chip from sale to use: customer screening, licensing, shipping, customs, neocloud operations, end-use checks",
+   "Remote access to compute as a bypass route",
+   "Human influence channels on decisions and oversight: management, legal counsel, regulator"
   ],
-  "minute": [
-    "Since October 2022 America has barred sales of its most advanced AI chips to China. According to the reporting, Chinese firms found two ways around the ban: renting compute from cloud providers abroad, or receiving chips through intermediaries in South-East Asia that move them onward.",
-    "Megaspeed, a Singapore neocloud that rents out AI processors, took its current name in 2023 and quickly became one of Nvidia's largest buyers in the region. American officials suspect it of operating on both routes and have investigated it since September 2024; the firm denies the allegations. A short-seller estimates that its Malaysian subsidiary imported about $4.6bn of goods over roughly 14 months, mostly servers with Nvidia chips.",
-    "On November 8th Nvidia's CEO, Jensen Huang, admitted an extramarital affair, after reports linked him to Alice Huang (no relation), a Megaspeed executive whom US officials believe to be a Chinese agent; China rejects the claim. Nvidia's board is investigating whether he was the target of a foreign-intelligence effort. Earlier, Nvidia had said its own checks found no diversion, and Mr Huang said the company had counted every one of Megaspeed's chips.",
-    "Bloomberg and the New York Times reported that Nvidia's general counsel intervened last year in the Commerce Department's investigation of Megaspeed; Nvidia says it regularly consults export-control officials to share knowledge. The White House was reportedly warned about the relationship at least twice. The board is reportedly preparing to oust Mr Huang, Congress has summoned him to a closed briefing, and stalled bills may revive, including one requiring exporters to show their chips were not diverted, for instance by verifying where they are."
-  ],
-  "scope": {
-    "in": ["The path of a controlled AI chip from sale to use: customer screening, licensing, shipping, customs, neocloud operations, end-use checks", "Remote access to compute as a bypass route", "Human influence channels on decisions and oversight: management, legal counsel, regulator"],
-    "out": ["Technical security of the chip itself (firmware, side channels)", "Cyber intrusions into the vendor's or customer's networks", "Whether the export policy itself is right", "The private lives of the people involved, beyond the relationship relevant to the process"]
+  "out": [
+   "Technical security of the chip itself (firmware, side channels)",
+   "Cyber intrusions into the vendor's or customer's networks",
+   "Whether the export policy itself is right",
+   "The private lives of the people involved, beyond the relationship relevant to the process"
+  ]
+ },
+ "boundaries": {
+  "us": "United States · vendor and regulator",
+  "transit": "Transit country · South-East Asia",
+  "customer": "Customer boundary",
+  "restricted": "Restricted country"
+ },
+ "kinds": {
+  "entity": "External entity",
+  "process": "Process",
+  "store": "Data store"
+ },
+ "nodes": {
+  "E2": {
+   "label": "Export regulator",
+   "sub": "Commerce Dept. (BIS)",
+   "desc": "Decides what may be sold to whom, issues licences and investigates suspected violations. The Megaspeed investigation reportedly began in September 2024 and had not led to visible action before the scandal."
   },
-  "boundaries": {"us": "United States · vendor and regulator", "transit": "Transit country · South-East Asia", "customer": "Customer boundary", "restricted": "Restricted country"},
-  "kinds": {"entity": "External entity", "process": "Process", "store": "Data store"},
-  "nodes": {
-    "E2": {"label": "Export regulator", "sub": "Commerce Dept. (BIS)", "desc": "Decides what may be sold to whom, issues licences and investigates suspected violations. The Megaspeed investigation reportedly began in September 2024 and had not led to visible action before the scandal."},
-    "P6": {"label": "Senior management", "sub": "at the vendor", "desc": "The CEO and leadership. Modelled as a process because they make decisions that affect the whole chain: vouching for customers, contact with the regulator, messages to the market. The component with the most threats."},
-    "P1": {"label": "Sales and screening", "sub": "vendor compliance", "desc": "Receives orders, checks who the customer is and the declared use, and applies for a licence where required. This is where a transit-country customer is judged legitimate."},
-    "P5": {"label": "End-use audit", "sub": "vendor and regulator", "desc": "Checks that hardware is where it was declared. Nvidia said its own checks found no diversion. The professional question is who checks: the vendor, which profits from the sale, or an independent party."},
-    "P3": {"label": "Shipping and customs", "sub": "via server makers", "desc": "Chips arrive inside servers built by other manufacturers and enter the transit country with an import declaration. From here on they are outside the vendor's direct control."},
-    "D2": {"label": "Import records", "sub": "trade data", "desc": "Customs declarations in the transit country. The ~$4.6bn import estimate came from here. The most available detection source, and it needs no one's cooperation."},
-    "P4": {"label": "GPU cloud", "sub": "neocloud in transit country", "desc": "The customer: runs data centres and rents compute. Everything inside its boundary is visible to the vendor only through what the customer reports. Officials suspect Megaspeed operated on both routes; the firm denies it."},
-    "D3": {"label": "Server inventory", "sub": "serial numbers", "desc": "The list of what is installed and where. An accurate list proves the chips were counted, not that they are still there or used as declared."},
-    "E3": {"label": "Diverted-hardware buyer", "sub": "investigators' hypothesis", "desc": "Whoever receives diverted servers. Marked as a presumed adversary. The reporting contains no proof this happened with Megaspeed."},
-    "E4": {"label": "Remote renters", "sub": "identity unknown", "desc": "Users of the compute over the network while the hardware stays put. No physical diversion at all on this route."},
-    "E5": {"label": "Foreign intelligence", "sub": "alleged, under review", "desc": "The board is reviewing whether the CEO was the target of an intelligence effort. China rejects the claim. In the diagram this is a possible influence channel, not a fact."}
+  "P6": {
+   "label": "Senior management",
+   "sub": "at the vendor",
+   "desc": "The CEO and leadership. Modelled as a process because they make decisions that affect the whole chain: vouching for customers, contact with the regulator, messages to the market. The component with the most threats."
   },
-  "flows": {
-    "f1": "Order and end-use statement", "f2": "Licence application and decision, where required", "f3": "Servers and shipping documents", "f4": "Import declaration",
-    "f5": "Delivery to customer", "f6": "Inventory and serial-number record", "f7": "Count and audit", "f8": "Findings report",
-    "f9": "Remote access to compute (suspected route)", "f10": "Hardware diversion (alleged, denied)", "f11": "Influence attempt (alleged, under review)",
-    "f12": "Management vouching for the customer", "f13": "Direct channel to the regulator"
+  "P1": {
+   "label": "Sales and screening",
+   "sub": "vendor compliance",
+   "desc": "Receives orders, checks who the customer is and the declared use, and applies for a licence where required. This is where a transit-country customer is judged legitimate."
   },
-  "assets": {
-    "A1": {"name": "Technological lead in AI compute", "owner": "US government", "why": "The purpose of the whole control: slow an adversary's ability to train frontier models.", "loss": "Compute reaches the restricted destination without a licence; the ban exists only on paper."},
-    "A2": {"name": "Credibility of the control regime", "owner": "Regulator and Congress", "why": "Controls also work as deterrence. If everyone knows they leak, they stop deterring.", "loss": "A bypass route exposed in public teaches others how to bypass."},
-    "A3": {"name": "Independent judgement of management", "owner": "Board of directors", "why": "Decisions on customers and on contact with the regulator must be free of personal influence.", "loss": "A business decision that no one can tell was made on business grounds."},
-    "A4": {"name": "Vendor value and reputation", "owner": "Shareholders", "why": "Shares reportedly fell about 7% after the CEO's memo and another 9% after hours; a class action was filed.", "loss": "Damage to value and trust, even without any proven violation."},
-    "A5": {"name": "Legitimate chip access in the region", "owner": "Legitimate South-East Asian customers", "why": "Most buyers in the region are real businesses. They are the asset the control should not hurt.", "loss": "Blanket tightening that blocks them too and makes the control politically too costly."}
+  "P5": {
+   "label": "End-use audit",
+   "sub": "vendor and regulator",
+   "desc": "Checks that hardware is where it was declared. Nvidia said its own checks found no diversion. The professional question is who checks: the vendor, which profits from the sale, or an independent party."
   },
-  "threats": {
-    "S1": {"title": "A front company poses as a legitimate end user", "desc": "An intermediary in a transit country passes customer screening as if the servers stay with it. From outside, a front company looks exactly like a fast-growing GPU cloud: large purchases, steady orders, tidy declarations.", "evidence": "US officials suspect Megaspeed of smuggling chips into China; it quickly became one of the largest buyers in the region. (Alleged, denied.)"},
-    "S2": {"title": "Remote renters' identity is unknown", "desc": "A GPU cloud can sell compute hours to anyone who pays. Without checking who stands behind an account, any restricted party can appear as an ordinary customer.", "evidence": "According to the reporting, some Chinese firms bypass the ban by renting compute in data centres outside China."},
-    "T1": {"title": "Inventory records that don't reflect reality", "desc": "The list can be right on count day and wrong the next. A count that checks documents, or a pre-announced visit, checks the paper, not the hardware.", "evidence": "The CEO said Nvidia counted every Megaspeed chip, and Nvidia said its checks found no diversion."},
-    "T2": {"title": "Generic import declarations hide what moved", "desc": "\"Servers\" on a customs form can be anything. Without detail and a link to serial numbers, trade data shows volume but not where it goes next.", "evidence": "The ~$4.6bn import estimate rests on trade data, mostly servers with Nvidia chips."},
-    "T3": {"title": "Influence on the oversight process itself", "desc": "When the vendor has a direct channel to the body investigating its customer, it can affect the pace or direction of the investigation, even without bad intent. This tampers with the process, not the data.", "evidence": "Bloomberg and the NYT reported that Nvidia's general counsel intervened in Commerce's investigation. Nvidia says it regularly consults officials to share knowledge. (Reported, with Nvidia's response.)"},
-    "R1": {"title": "No way to prove where the servers were", "desc": "If hardware leaves no trace of its location, the customer can deny any claim and investigators cannot prove it. Denial cuts both ways: an innocent customer cannot prove innocence either.", "evidence": "The Megaspeed investigation has run since September 2024; the firm denies all allegations. (Alleged, denied.)"},
-    "R2": {"title": "Undocumented ties between executives and a customer", "desc": "A personal relationship between a senior executive and a customer executive, not disclosed to the board, means no one can later reconstruct which decisions it affected.", "evidence": "The two were reportedly photographed together repeatedly, and the CEO described the relationship as ordinary about a month before admitting the affair."},
-    "I1": {"title": "An executive as an intelligence target", "desc": "An executive with access to strategy, product roadmaps and government conversations is a natural target. A personal relationship is a channel where information can leak without any system recording it.", "evidence": "The board is reviewing whether the CEO was the target of a foreign-intelligence effort. China rejects the claim that Alice Huang is an agent. (Alleged, under review.)"},
-    "D1": {"title": "Overloading the enforcement mechanism", "desc": "With many intermediaries, each looking like a plausible business on its own, the oversight body cannot check them all. This is denial of service against enforcement: not shutting it down, flooding it.", "evidence": "The reporting describes South-East Asian intermediaries as a common route, and a single investigation running for more than two years."},
-    "E1": {"title": "Remote rental bypasses the ban", "desc": "The ban defines the boundary by where the hardware is. Network access crosses that boundary without the hardware moving and gives the restricted destination exactly what the ban meant to deny. The control checks the box, not the use.", "evidence": "Some Chinese firms reportedly rent compute in data centres abroad, and officials suspect Megaspeed also operated on this route. (Alleged, denied.)"},
-    "E2": {"title": "Excess trust in a customer through a personal tie", "desc": "When management vouches for a customer, the customer effectively gets a higher privilege: fewer questions, fewer checks, more willingness to defend it before the regulator. Elevation of privilege that passes through no system.", "evidence": "Nvidia reportedly kept vouching for Megaspeed after the investigation began, and the CEO publicly stated that all chips were counted."}
+  "P3": {
+   "label": "Shipping and customs",
+   "sub": "via server makers",
+   "desc": "Chips arrive inside servers built by other manufacturers and enter the transit country with an import declaration. From here on they are outside the vendor's direct control."
   },
-  "resNotes": {
-    "S1": "Likelihood drops with beneficial-ownership checks and a location signal. Impact is unchanged: if it happens, the damage is the same.",
-    "S2": "KYC for renters lowers likelihood, not to zero: a verified account can still act as an intermediary.",
-    "T1": "Independent spot audits and an on-chip location signal turn the count from a declaration into a measurement.",
-    "R1": "Signed location records make proof possible, and they protect legitimate customers too.",
-    "D1": "Trade analytics helps prioritise, and a burden of proof shifts work to the exporter. The load does not disappear.",
-    "E1": "The highest remaining threat. The bills mentioned in the reporting address physical diversion, not remote access."
+  "D2": {
+   "label": "Import records",
+   "sub": "trade data",
+   "desc": "Customs declarations in the transit country. The ~$4.6bn import estimate came from here. The most available detection source, and it needs no one's cooperation."
   },
-  "tree": {
-    "root": "A party in a restricted country uses compute from banned chips",
-    "A": "Physical diversion via a transit-country intermediary",
-    "A1": "Appear to be a legitimate customer",
-    "A1a": "A front company with opaque ownership passes screening",
-    "A1b": "A vendor executive's vouching reduces scrutiny",
-    "A2": "Move the hardware onward without being stopped",
-    "A2a": "Evade every detection mechanism",
-    "A2a1": "Inventory counts don't check the field",
-    "A2a2": "The chip doesn't report that it moved",
-    "A2a3": "Import volume raises no suspicion",
-    "A2b": "The investigation stalls through a direct channel to the regulator",
-    "B": "Remote rental, with no hardware movement",
-    "B1": "A transit-country cloud buys chips legally (legal today)",
-    "B2": "Accounts opened without identifying the actual user",
-    "insight": "The physical-diversion branch closes in several ways, because any single detection mechanism is enough to stop it. The rental branch closes with only one control, renter KYC (M4). The bills mentioned in the reporting, including location verification, do not touch it at all."
+  "P4": {
+   "label": "GPU cloud",
+   "sub": "neocloud in transit country",
+   "desc": "The customer: runs data centres and rents compute. Everything inside its boundary is visible to the vendor only through what the customer reports. Officials suspect Megaspeed operated on both routes; the firm denies it."
   },
-  "mitigations": {
-    "M1": {"name": "On-chip location verification", "owner": "Vendor, required by regulator", "desc": "The chip periodically proves it is near trusted servers in the declared region, using signed response times. Proximity cannot be faked, only distance, so a diverted chip is exposed.", "limit": "Does not stop remote rental, where the chip really is in place. Raises privacy and sovereignty concerns for customers."},
-    "M2": {"name": "Statutory duty to show chips were not diverted", "owner": "Congress, via the regulator", "desc": "Shifts the burden of proof from investigators to the exporter: instead of the regulator proving diversion, the exporter must show it did not happen.", "limit": "Depends on a measurement mechanism such as M1. As described in the reporting, it covers diversion, not remote access."},
-    "M3": {"name": "Enhanced customer due diligence", "owner": "Vendor compliance", "desc": "Checks beneficial owners, management history, and the fit between purchases and the declared data-centre capacity. A customer that grew several-fold in a year gets deeper scrutiny, not lighter.", "limit": "A professional front company can pass good screening too. A layer, not a block."},
-    "M4": {"name": "KYC for compute renters", "owner": "Cloud operator, required by regulator", "desc": "A cloud renting controlled chips must identify who stands behind every large account and report usage consistent with training large models.", "limit": "Hard to enforce outside the US, and can be bypassed through another layer of intermediaries."},
-    "M5": {"name": "Serial-number registry and independent spot audits", "owner": "Regulator, or an auditor on its behalf", "desc": "Every server is registered by serial number and location. A party other than the vendor runs unannounced audits and compares the field with the registry. Separation of duties: the seller is not the checker.", "limit": "Expensive, and depends on the transit country allowing audits on its territory."},
-    "M6": {"name": "Trade-data analytics against capacity", "owner": "Regulator and customs", "desc": "Automatically compares each customer's import volume with what its data centres can actually power, by electricity and floor space. A large gap flags a candidate for review. See the sample rule.", "limit": "Flags suspicion, proves nothing. Needs capacity data that is not always available."},
-    "M7": {"name": "Conflict-of-interest disclosure and counter-intelligence briefings", "owner": "Board of directors", "desc": "Any personal tie between an executive and someone at a customer, supplier or regulator is reported to an independent committee. Executives at firms with controlled technology get regular briefings on influence attempts, as government officials do.", "limit": "Relies on self-reporting. Does not help when the person who should report also decides what gets reported."},
-    "M8": {"name": "Logging every contact with the regulator during an open investigation", "owner": "Legal counsel and regulator", "desc": "Every approach by the vendor to a body investigating one of its customers is logged and available to an audit committee. Routine consultation continues, but transparently.", "limit": "Does not prevent influence through informal channels, such as the political level."}
+  "D3": {
+   "label": "Server inventory",
+   "sub": "serial numbers",
+   "desc": "The list of what is installed and where. An accurate list proves the chips were counted, not that they are still there or used as declared."
   },
-  "types": {"prevent": "Prevent", "detect": "Detect", "respond": "Respond"},
-  "sources": {"report": "In the reporting", "ours": "Our proposal"},
-  "ruleTitle": "Sample detection rule (M6)",
-  "ruleIntro": "Flags importers whose GPU-server imports exceed what their sites can power. SQL-style pseudocode; thresholds are illustrative only.",
-  "ruleNote": "The rule does not test for diversion. It tests whether the numbers add up, which is what makes it useful: it needs no cooperation from the customer.",
-  "residual": "Even with all eight controls, two things stay open. First, remote rental through layers of intermediaries (E1), because the boundary is defined by location, not use. Second, personal influence on decision-makers, because no mechanism replaces a board that asks questions. This residual risk is effectively accepted by the government, which defines the ban, and by the board, which decides how independent internal control is.",
-  "attack": {
-    "intro": "ATT&CK was built for cyber intrusions. This system is a supply chain and a human process, so the mapping is by analogy. It is useful because it shows the patterns are already familiar to defenders.",
-    "T1591.004": "Identifying role-holders with influence over decisions, such as a CEO who decides on customers and talks to government.",
-    "T1199": "Exploiting trust between vendor and a regular customer: a customer vouched for by management is checked less.",
-    "T1078": "Using legitimate accounts at a GPU cloud instead of smuggling. No break-in, just a paying customer.",
-    "T1036": "Prohibited activity disguised as normal business, such as a front company that looks like a growing cloud.",
-    "caveat": "ATT&CK has no technique for physical smuggling or for influencing a regulator. Those patterns stay in the model unmapped, which is fine: the mapping supports a shared language; it is not the goal."
+  "E3": {
+   "label": "Diverted-hardware buyer",
+   "sub": "investigators' hypothesis",
+   "desc": "Whoever receives diverted servers. Marked as a presumed adversary. The reporting contains no proof this happened with Megaspeed."
   },
-  "takeaways": [
-    {"kind": "Technology", "text": "A control based on counts and documents checks the paper. A location signal from the chip turns it from a declaration into a measurement, and also protects an innocent customer who wants to prove it."},
-    {"kind": "Technology", "text": "A trust boundary defined by where the hardware sits misses everything that crosses the network. Remote rental is the only branch in the tree that the proposals in the reporting leave open."},
-    {"kind": "People", "text": "The component with the most threats is management, not a server. When the person vouching for a customer is personally tied to it, separation of duties disappears without anyone deleting it."},
-    {"kind": "Practice", "text": "A good threat model includes influence channels on oversight itself. \"Who checks the checker\" belongs in the diagram, not only in the audit afterwards."}
-  ],
-  "glossary": {
-    "threat-model": "A document describing a system, what can go wrong in it, and the controls. Done before launch or after major change, while fixes are still cheap.",
-    "dfd": "Data-flow diagram: external entities, processes, data stores and flows. It shows what moves between whom, not how each part is built.",
-    "trust-boundary": "A line where data or control passes between parties with different levels of trust. Most threats sit on these lines.",
-    "stride": "Microsoft's six threat categories: Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege.",
-    "attack-tree": "A diagram with the attacker's goal at the root and the ways to reach it below. OR: any child suffices. AND: all children are needed.",
-    "risk-matrix": "Likelihood against impact, each 1-5. The product sets priority. The scores are estimates, not measurements.",
-    "residual-risk": "The risk that remains after all proposed controls work, and who accepts it.",
-    "export-control": "Laws restricting the sale of sensitive technology to certain destinations; in the US mainly enforced by the Commerce Department.",
-    "neocloud": "A new cloud provider specialising in renting GPU compute for AI training and inference.",
-    "diversion": "Goods sold to a permitted destination that actually reach a prohibited one, usually via an intermediary.",
-    "kyc": "Know your customer: verifying who the customer really is, who owns it, and whether its story makes sense.",
-    "end-use": "A check, sometimes on site, that goods are with the declared user and used as declared.",
-    "short-seller": "An investor who profits when a share falls; some publish research on company problems. Treated as an estimate, not fact.",
-    "location-verification": "A chip proves where it operates, for example from signed response times to trusted servers. Signals have a speed limit, so a chip can look farther, never closer.",
-    "mitre-attack": "An open catalogue of attacker techniques with IDs, used as a shared language by defenders. Built for cyber intrusions.",
-    "insider": "Risk from someone already inside the trust boundary: an employee, executive or partner. Intent is not required.",
-    "front-company": "A company that looks like a normal business but serves as a channel for a party that cannot act in its own name.",
-    "separation-of-duties": "No single person both performs a sensitive action and approves it."
+  "E4": {
+   "label": "Remote renters",
+   "sub": "identity unknown",
+   "desc": "Users of the compute over the network while the hardware stays put. No physical diversion at all on this route."
   },
-  "sections": {
-    "meta": "Document information", "summary": "Summary", "context": "Context", "scope": "Scope", "inScope": "In scope", "outScope": "Out of scope",
-    "model": "System model", "components": "Components", "flows": "Data flows", "boundaries": "Trust boundaries", "assets": "Assets",
-    "threats": "Threats (STRIDE per element)", "tree": "Attack tree for the main threat", "risk": "Risk before and after controls",
-    "mitigations": "Controls", "residual": "Residual risk", "attack": "Mapping to MITRE ATT&CK", "takeaways": "Takeaways", "glossary": "Appendix: glossary",
-    "claims": "Facts and allegations"
+  "E5": {
+   "label": "Foreign intelligence",
+   "sub": "alleged, under review",
+   "desc": "The board is reviewing whether the CEO was the target of an intelligence effort. China rejects the claim. In the diagram this is a possible influence channel, not a fact."
+  }
+ },
+ "flows": {
+  "f1": "Order and end-use statement",
+  "f2": "Licence application and decision, where required",
+  "f3": "Servers and shipping documents",
+  "f4": "Import declaration",
+  "f5": "Delivery to customer",
+  "f6": "Inventory and serial-number record",
+  "f7": "Count and audit",
+  "f8": "Findings report",
+  "f9": "Remote access to compute (suspected route)",
+  "f10": "Hardware diversion (alleged, denied)",
+  "f11": "Influence attempt (alleged, under review)",
+  "f12": "Management vouching for the customer",
+  "f13": "Direct channel to the regulator"
+ },
+ "assets": {
+  "A1": {
+   "name": "Technological lead in AI compute",
+   "owner": "US government",
+   "why": "The purpose of the whole control: slow an adversary's ability to train frontier models.",
+   "loss": "Compute reaches the restricted destination without a licence; the ban exists only on paper."
   },
-  "labels": {
-    "system": "System", "method": "Method", "status": "Status", "date": "Source date", "id": "Item", "id_col": "ID", "name": "Name", "type": "Type", "zone": "Boundary",
-    "desc": "Description", "from": "From", "to": "To", "flow": "Flow", "owner": "Owner", "value": "Importance", "why": "Why it matters", "loss": "If lost",
-    "cat": "STRIDE", "component": "Component", "threat": "Threat", "evidence": "Basis in reporting", "l": "L", "i": "I", "risk": "Risk",
-    "controls": "Controls", "before": "Before", "after": "After", "note": "Note", "covers": "Covers", "limit": "Limitation", "source": "Source",
-    "technique": "Technique", "where": "Where it appears", "gateOr": "OR", "gateAnd": "AND", "legal": "legal today", "term": "Term",
-    "levels": {"5": "Critical", "4": "High", "3": "Medium", "2": "Low-medium", "1": "Low"},
-    "diagram": "Figure 1. Data-flow diagram with trust boundaries. Dashed red flows are suspected, not proven."
+  "A2": {
+   "name": "Credibility of the control regime",
+   "owner": "Regulator and Congress",
+   "why": "Controls also work as deterrence. If everyone knows they leak, they stop deterring.",
+   "loss": "A bypass route exposed in public teaches others how to bypass."
   },
-  "source": "Based on reporting in The Economist, November 14th 2026 (\"CUDA known better\", Business section). The scores, controls and conclusions are our educational analysis, not a factual finding about any person or company."
+  "A3": {
+   "name": "Independent judgement of management",
+   "owner": "Board of directors",
+   "why": "Decisions on customers and on contact with the regulator must be free of personal influence.",
+   "loss": "A business decision that no one can tell was made on business grounds."
+  },
+  "A4": {
+   "name": "Vendor value and reputation",
+   "owner": "Shareholders",
+   "why": "Shares reportedly fell about 7% after the CEO's memo and another 9% after hours; a class action was filed.",
+   "loss": "Damage to value and trust, even without any proven violation."
+  },
+  "A5": {
+   "name": "Legitimate chip access in the region",
+   "owner": "Legitimate South-East Asian customers",
+   "why": "Most buyers in the region are real businesses. They are the asset the control should not hurt.",
+   "loss": "Blanket tightening that blocks them too and makes the control politically too costly."
+  }
+ },
+ "threats": {
+  "S1": {
+   "title": "A front company poses as a legitimate end user",
+   "desc": "An intermediary in a transit country passes customer screening as if the servers stay with it. From outside, a front company looks exactly like a fast-growing GPU cloud: large purchases, steady orders, tidy declarations.",
+   "evidence": "US officials suspect Megaspeed of smuggling chips into China; it quickly became one of the largest buyers in the region. (Alleged, denied.)"
+  },
+  "S2": {
+   "title": "Remote renters' identity is unknown",
+   "desc": "A GPU cloud can sell compute hours to anyone who pays. Without checking who stands behind an account, any restricted party can appear as an ordinary customer.",
+   "evidence": "According to the reporting, some Chinese firms bypass the ban by renting compute in data centres outside China."
+  },
+  "T1": {
+   "title": "Inventory records that don't reflect reality",
+   "desc": "The list can be right on count day and wrong the next. A count that checks documents, or a pre-announced visit, checks the paper, not the hardware.",
+   "evidence": "The CEO said Nvidia counted every Megaspeed chip, and Nvidia said its checks found no diversion."
+  },
+  "T2": {
+   "title": "Generic import declarations hide what moved",
+   "desc": "\"Servers\" on a customs form can be anything. Without detail and a link to serial numbers, trade data shows volume but not where it goes next.",
+   "evidence": "The ~$4.6bn import estimate rests on trade data, mostly servers with Nvidia chips."
+  },
+  "T3": {
+   "title": "Influence on the oversight process itself",
+   "desc": "When the vendor has a direct channel to the body investigating its customer, it can affect the pace or direction of the investigation, even without bad intent. This tampers with the process, not the data.",
+   "evidence": "Bloomberg and the NYT reported that Nvidia's general counsel intervened in Commerce's investigation. Nvidia says it regularly consults officials to share knowledge. (Reported, with Nvidia's response.)"
+  },
+  "R1": {
+   "title": "No way to prove where the servers were",
+   "desc": "If hardware leaves no trace of its location, the customer can deny any claim and investigators cannot prove it. Denial cuts both ways: an innocent customer cannot prove innocence either.",
+   "evidence": "The Megaspeed investigation has run since September 2024; the firm denies all allegations. (Alleged, denied.)"
+  },
+  "R2": {
+   "title": "Undocumented ties between executives and a customer",
+   "desc": "A personal relationship between a senior executive and a customer executive, not disclosed to the board, means no one can later reconstruct which decisions it affected.",
+   "evidence": "The two were reportedly photographed together repeatedly, and the CEO described the relationship as ordinary about a month before admitting the affair."
+  },
+  "I1": {
+   "title": "An executive as an intelligence target",
+   "desc": "An executive with access to strategy, product roadmaps and government conversations is a natural target. A personal relationship is a channel where information can leak without any system recording it.",
+   "evidence": "The board is reviewing whether the CEO was the target of a foreign-intelligence effort. China rejects the claim that Alice Huang is an agent. (Alleged, under review.)"
+  },
+  "D1": {
+   "title": "Overloading the enforcement mechanism",
+   "desc": "With many intermediaries, each looking like a plausible business on its own, the oversight body cannot check them all. This is denial of service against enforcement: not shutting it down, flooding it.",
+   "evidence": "The reporting describes South-East Asian intermediaries as a common route, and a single investigation running for more than two years."
+  },
+  "E1": {
+   "title": "Remote rental bypasses the ban",
+   "desc": "The ban defines the boundary by where the hardware is. Network access crosses that boundary without the hardware moving and gives the restricted destination exactly what the ban meant to deny. The control checks the box, not the use.",
+   "evidence": "Some Chinese firms reportedly rent compute in data centres abroad, and officials suspect Megaspeed also operated on this route. (Alleged, denied.)"
+  },
+  "E2": {
+   "title": "Excess trust in a customer through a personal tie",
+   "desc": "When management vouches for a customer, the customer effectively gets a higher privilege: fewer questions, fewer checks, more willingness to defend it before the regulator. Elevation of privilege that passes through no system.",
+   "evidence": "Nvidia reportedly kept vouching for Megaspeed after the investigation began, and the CEO publicly stated that all chips were counted."
+  }
+ },
+ "resNotes": {
+  "S1": "Likelihood drops with beneficial-ownership checks and a location signal. Impact is unchanged: if it happens, the damage is the same.",
+  "S2": "KYC for renters lowers likelihood, not to zero: a verified account can still act as an intermediary.",
+  "T1": "Independent spot audits and an on-chip location signal turn the count from a declaration into a measurement.",
+  "R1": "Signed location records make proof possible, and they protect legitimate customers too.",
+  "D1": "Trade analytics helps prioritise, and a burden of proof shifts work to the exporter. The load does not disappear.",
+  "E1": "The highest remaining threat. The bills mentioned in the reporting address physical diversion, not remote access."
+ },
+ "tree": {
+  "root": "A party in a restricted country uses compute from banned chips",
+  "A": "Physical diversion via a transit-country intermediary",
+  "A1": "Appear to be a legitimate customer",
+  "A1a": "A front company with opaque ownership passes screening",
+  "A1b": "A vendor executive's vouching reduces scrutiny",
+  "A2": "Move the hardware onward without being stopped",
+  "A2a": "Evade every detection mechanism",
+  "A2a1": "Inventory counts don't check the field",
+  "A2a2": "The chip doesn't report that it moved",
+  "A2a3": "Import volume raises no suspicion",
+  "A2b": "The investigation stalls through a direct channel to the regulator",
+  "B": "Remote rental, with no hardware movement",
+  "B1": "A transit-country cloud buys chips legally (legal today)",
+  "B2": "Accounts opened without identifying the actual user",
+  "insight": "The physical-diversion branch closes in several ways, because any single detection mechanism is enough to stop it. The rental branch closes with only one control, renter KYC (M4). The bills mentioned in the reporting, including location verification, do not touch it at all."
+ },
+ "mitigations": {
+  "M1": {
+   "name": "On-chip location verification",
+   "owner": "Vendor, required by regulator",
+   "desc": "The chip periodically proves it is near trusted servers in the declared region, using signed response times. Proximity cannot be faked, only distance, so a diverted chip is exposed.",
+   "limit": "Does not stop remote rental, where the chip really is in place. Raises privacy and sovereignty concerns for customers."
+  },
+  "M2": {
+   "name": "Statutory duty to show chips were not diverted",
+   "owner": "Congress, via the regulator",
+   "desc": "Shifts the burden of proof from investigators to the exporter: instead of the regulator proving diversion, the exporter must show it did not happen.",
+   "limit": "Depends on a measurement mechanism such as M1. As described in the reporting, it covers diversion, not remote access."
+  },
+  "M3": {
+   "name": "Enhanced customer due diligence",
+   "owner": "Vendor compliance",
+   "desc": "Checks beneficial owners, management history, and the fit between purchases and the declared data-centre capacity. A customer that grew several-fold in a year gets deeper scrutiny, not lighter.",
+   "limit": "A professional front company can pass good screening too. A layer, not a block."
+  },
+  "M4": {
+   "name": "KYC for compute renters",
+   "owner": "Cloud operator, required by regulator",
+   "desc": "A cloud renting controlled chips must identify who stands behind every large account and report usage consistent with training large models.",
+   "limit": "Hard to enforce outside the US, and can be bypassed through another layer of intermediaries."
+  },
+  "M5": {
+   "name": "Serial-number registry and independent spot audits",
+   "owner": "Regulator, or an auditor on its behalf",
+   "desc": "Every server is registered by serial number and location. A party other than the vendor runs unannounced audits and compares the field with the registry. Separation of duties: the seller is not the checker.",
+   "limit": "Expensive, and depends on the transit country allowing audits on its territory."
+  },
+  "M6": {
+   "name": "Trade-data analytics against capacity",
+   "owner": "Regulator and customs",
+   "desc": "Automatically compares each customer's import volume with what its data centres can actually power, by electricity and floor space. A large gap flags a candidate for review. See the sample rule.",
+   "limit": "Flags suspicion, proves nothing. Needs capacity data that is not always available."
+  },
+  "M7": {
+   "name": "Conflict-of-interest disclosure and counter-intelligence briefings",
+   "owner": "Board of directors",
+   "desc": "Any personal tie between an executive and someone at a customer, supplier or regulator is reported to an independent committee. Executives at firms with controlled technology get regular briefings on influence attempts, as government officials do.",
+   "limit": "Relies on self-reporting. Does not help when the person who should report also decides what gets reported."
+  },
+  "M8": {
+   "name": "Logging every contact with the regulator during an open investigation",
+   "owner": "Legal counsel and regulator",
+   "desc": "Every approach by the vendor to a body investigating one of its customers is logged and available to an audit committee. Routine consultation continues, but transparently.",
+   "limit": "Does not prevent influence through informal channels, such as the political level."
+  }
+ },
+ "types": {
+  "prevent": "Prevent",
+  "detect": "Detect",
+  "respond": "Respond"
+ },
+ "sources": {
+  "report": "In the reporting",
+  "ours": "Our proposal"
+ },
+ "ruleTitle": "Sample detection rule (M6)",
+ "ruleIntro": "Flags importers whose GPU-server imports exceed what their sites can power. SQL-style pseudocode; thresholds are illustrative only.",
+ "ruleNote": "The rule does not test for diversion. It tests whether the numbers add up, which is what makes it useful: it needs no cooperation from the customer.",
+ "residual": "Even with all eight controls, two things stay open. First, remote rental through layers of intermediaries (E1), because the boundary is defined by location, not use. Second, personal influence on decision-makers, because no mechanism replaces a board that asks questions. This residual risk is effectively accepted by the government, which defines the ban, and by the board, which decides how independent internal control is.",
+ "attack": {
+  "intro": "ATT&CK was built for cyber intrusions. This system is a supply chain and a human process, so the mapping is by analogy. It is useful because it shows the patterns are already familiar to defenders.",
+  "T1591.004": "Identifying role-holders with influence over decisions, such as a CEO who decides on customers and talks to government.",
+  "T1199": "Exploiting trust between vendor and a regular customer: a customer vouched for by management is checked less.",
+  "T1078": "Using legitimate accounts at a GPU cloud instead of smuggling. No break-in, just a paying customer.",
+  "T1036": "Prohibited activity disguised as normal business, such as a front company that looks like a growing cloud.",
+  "caveat": "ATT&CK has no technique for physical smuggling or for influencing a regulator. Those patterns stay in the model unmapped, which is fine: the mapping supports a shared language; it is not the goal."
+ },
+ "takeaways": [
+  {
+   "kind": "Technology",
+   "text": "A control based on counts and documents checks the paper. A location signal from the chip turns it from a declaration into a measurement, and also protects an innocent customer who wants to prove it."
+  },
+  {
+   "kind": "Technology",
+   "text": "A trust boundary defined by where the hardware sits misses everything that crosses the network. Remote rental is the only branch in the tree that the proposals in the reporting leave open."
+  },
+  {
+   "kind": "People",
+   "text": "The component with the most threats is management, not a server. When the person vouching for a customer is personally tied to it, separation of duties disappears without anyone deleting it."
+  },
+  {
+   "kind": "Practice",
+   "text": "A good threat model includes influence channels on oversight itself. \"Who checks the checker\" belongs in the diagram, not only in the audit afterwards."
+  }
+ ],
+ "glossary": {
+  "threat-model": "A document describing a system, what can go wrong in it, and the controls. Done before launch or after major change, while fixes are still cheap.",
+  "dfd": "Data-flow diagram: external entities, processes, data stores and flows. It shows what moves between whom, not how each part is built.",
+  "trust-boundary": "A line where data or control passes between parties with different levels of trust. Most threats sit on these lines.",
+  "stride": "Microsoft's six threat categories: Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege.",
+  "attack-tree": "A diagram with the attacker's goal at the root and the ways to reach it below. OR: any child suffices. AND: all children are needed.",
+  "risk-matrix": "Likelihood against impact, each 1-5. The product sets priority. The scores are estimates, not measurements.",
+  "residual-risk": "The risk that remains after all proposed controls work, and who accepts it.",
+  "export-control": "Laws restricting the sale of sensitive technology to certain destinations; in the US mainly enforced by the Commerce Department.",
+  "neocloud": "A new cloud provider specialising in renting GPU compute for AI training and inference.",
+  "diversion": "Goods sold to a permitted destination that actually reach a prohibited one, usually via an intermediary.",
+  "kyc": "Know your customer: verifying who the customer really is, who owns it, and whether its story makes sense.",
+  "end-use": "A check, sometimes on site, that goods are with the declared user and used as declared.",
+  "short-seller": "An investor who profits when a share falls; some publish research on company problems. Treated as an estimate, not fact.",
+  "location-verification": "A chip proves where it operates, for example from signed response times to trusted servers. Signals have a speed limit, so a chip can look farther, never closer.",
+  "mitre-attack": "An open catalogue of attacker techniques with IDs, used as a shared language by defenders. Built for cyber intrusions.",
+  "insider": "Risk from someone already inside the trust boundary: an employee, executive or partner. Intent is not required.",
+  "front-company": "A company that looks like a normal business but serves as a channel for a party that cannot act in its own name.",
+  "separation-of-duties": "No single person both performs a sensitive action and approves it."
+ },
+ "sections": {
+  "meta": "Document information",
+  "summary": "Summary",
+  "context": "Context",
+  "scope": "Scope",
+  "inScope": "In scope",
+  "outScope": "Out of scope",
+  "model": "System model",
+  "components": "Components",
+  "flows": "Data flows",
+  "boundaries": "Trust boundaries",
+  "assets": "Assets",
+  "threats": "Threats (STRIDE per element)",
+  "tree": "Attack tree for the main threat",
+  "risk": "Risk before and after controls",
+  "mitigations": "Controls",
+  "residual": "Residual risk",
+  "attack": "Mapping to MITRE ATT&CK",
+  "takeaways": "Takeaways",
+  "glossary": "Appendix: glossary",
+  "claims": "Facts and allegations"
+ },
+ "labels": {
+  "system": "System",
+  "method": "Method",
+  "status": "Status",
+  "date": "Source date",
+  "id": "Item",
+  "id_col": "ID",
+  "name": "Name",
+  "type": "Type",
+  "zone": "Boundary",
+  "desc": "Description",
+  "from": "From",
+  "to": "To",
+  "flow": "Flow",
+  "owner": "Owner",
+  "value": "Importance",
+  "why": "Why it matters",
+  "loss": "If lost",
+  "cat": "STRIDE",
+  "component": "Component",
+  "threat": "Threat",
+  "evidence": "Basis in reporting",
+  "l": "L",
+  "i": "I",
+  "risk": "Risk",
+  "controls": "Controls",
+  "before": "Before",
+  "after": "After",
+  "note": "Note",
+  "covers": "Covers",
+  "limit": "Limitation",
+  "source": "Source",
+  "technique": "Technique",
+  "where": "Where it appears",
+  "gateOr": "OR",
+  "gateAnd": "AND",
+  "legal": "legal today",
+  "term": "Term",
+  "levels": {
+   "5": "Critical",
+   "4": "High",
+   "3": "Medium",
+   "2": "Low-medium",
+   "1": "Low"
+  },
+  "diagram": "Figure 1. Data-flow diagram with trust boundaries. Dashed red flows are suspected, not proven."
+ },
+ "source": "Based on reporting in The Economist, November 14th 2026 (\"CUDA known better\", Business section). The scores, controls and conclusions are our educational analysis, not a factual finding about any person or company.",
+ "ruleNotes": [
+  {
+   "line": 6,
+   "text": "Each GPU draws roughly 1.2 kW including cooling. Illustrative only. Multiply, then divide by 1,000 to get megawatts."
+  },
+  {
+   "line": 8,
+   "text": "The cross-check: how much power is actually connected to the importer's sites. A grid connection is far harder to fake than a form."
+  },
+  {
+   "line": 9,
+   "text": "Customs codes for servers and server parts, so ordinary computers are not counted."
+  },
+  {
+   "line": 12,
+   "text": "The flag: imports need 1.5 times more power than exists. The margin is wide on purpose, to avoid flooding investigators with false alarms."
+  },
+  {
+   "line": 13,
+   "text": "Sort by the ratio of need to capacity, so the most suspicious importers come first."
+  }
+ ]
 }

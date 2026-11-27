@@ -3,8 +3,9 @@
 
 python3 tools/check.py [--item <ID>] [--shots DIR]
 Checks: no horizontal page scroll, no console errors/warnings, no page errors, data rendered, fonts loaded,
-and on the item page every interactive component (DFD selection, STRIDE filter, attack tree, risk matrix,
-glossary popover, theme toggle). Each step is wrapped so one failure is reported, not fatal.
+and on the item page every interactive component (guided DFD build, in-frame inspector, legend popovers,
+STRIDE by component, attack tree, twin risk matrices with floating detail, coverage grid, rule terminal,
+glossary popover, recap, theme toggle). Home: hero questions, STRIDE cards, seven steps, gallery filter. Each step is wrapped so one failure is reported, not fatal.
 """
 import sys, json, threading, functools, pathlib, http.server, socketserver, zipfile
 from playwright.sync_api import sync_playwright
@@ -47,61 +48,88 @@ def step(tag, name, fn):
 
 
 def item_interactions(pg, tag, it):
-    hi_before = sum(1 for t in it["threats"] if t["l"] * t["i"] >= 10)
-    hi_after = sum(1 for t in it["threats"] if t["res"]["l"] * t["res"]["i"] >= 10)
-    node = max(it["dfd"]["nodes"], key=lambda n: sum(1 for t in it["threats"] if t["node"] == n["id"]))
-    ncount = sum(1 for t in it["threats"] if t["node"] == node["id"])
+    T = it["threats"]
+    hi_before = sum(1 for t in T if t["l"] * t["i"] >= 10)
+    hi_after = sum(1 for t in T if t["res"]["l"] * t["res"]["i"] >= 10)
+    node = max(it["dfd"]["nodes"], key=lambda n: sum(1 for t in T if t["node"] == n["id"]))
+    ncount = sum(1 for t in T if t["node"] == node["id"])
+    nsteps = len(it["dfd"].get("steps") or [])
+
+    def stepper():
+        pg.locator(".dfd-card").scroll_into_view_if_needed()
+        first = pg.locator("svg.dfd .node:not(.off)").count()
+        clicks = 0
+        while pg.locator('.dfd-nav [data-act="next"]').count() and clicks < 12:
+            pg.locator('.dfd-nav [data-act="next"]').click(); pg.wait_for_timeout(60); clicks += 1
+        allv = pg.locator("svg.dfd .node:not(.off)").count()
+        ok = first < allv == len(it["dfd"]["nodes"]) and (not nsteps or clicks == nsteps)
+        return ok, f"step1 shows {first}, after {clicks} steps shows {allv}/{len(it['dfd']['nodes'])}"
+    step(tag, "DFD guided build", stepper)
 
     def dfd():
-        pg.locator(f'svg.dfd .node[data-node="{node["id"]}"]').click()
-        pg.wait_for_timeout(150)
-        h3 = pg.locator(".dfd-panel h3").inner_text()
-        vis = pg.locator("article.threat:not([hidden])").count()
-        ok = node["label"] in h3 and vis == ncount
-        return ok, f"panel='{h3[:30]}' visible={vis}/{ncount}"
-    step(tag, "DFD select -> panel + STRIDE filter", dfd)
+        pg.locator(f'svg.dfd .node[data-node="{node["id"]}"]').click(); pg.wait_for_timeout(150)
+        h3 = pg.locator(".dfd-side h3").inner_text()
+        lis = pg.locator(".dfd-side .tl li").count()
+        return node["label"] in h3 and lis == ncount, f"inspector='{h3[:30]}' threats={lis}/{ncount}"
+    step(tag, "DFD select -> in-frame inspector", dfd)
 
     def dfd_key():
-        pg.locator(f'svg.dfd .node[data-node="{node["id"]}"]').press("Enter")  # toggles off
-        pg.wait_for_timeout(100)
-        return pg.locator("article.threat:not([hidden])").count() == len(it["threats"]), "keyboard toggle clears filter"
+        pg.locator(f'svg.dfd .node[data-node="{node["id"]}"]').press("Enter"); pg.wait_for_timeout(100)
+        return pg.locator(".dfd-side .tl").count() == 0, "keyboard toggles inspector off"
     step(tag, "DFD keyboard", dfd_key)
 
-    def heat():
-        t = it["threats"][0]
-        pg.locator(f'.heat td button[data-node="{t["node"]}"][data-cat="{t["cat"]}"]').click()
-        pg.wait_for_timeout(100)
-        exp = sum(1 for x in it["threats"] if x["node"] == t["node"] and x["cat"] == t["cat"])
-        vis = pg.locator("article.threat:not([hidden])").count()
-        pg.locator(".filter-line .chip").click()
-        return vis == exp, f"cell filter {vis}/{exp}"
-    step(tag, "STRIDE heat cell filter", heat)
+    def legend():
+        pg.locator('.legend [data-term="trust-boundary"]').click(); pg.wait_for_timeout(100)
+        ok = pg.locator(".term-pop").count() == 1
+        pg.keyboard.press("Escape"); pg.wait_for_timeout(60)
+        return ok, "legend explains its symbols"
+    step(tag, "DFD legend popover", legend)
+
+    def stride():
+        comps = len({t["node"] for t in T})
+        return pg.locator(".comp").count() == comps and pg.locator(".legend6 .l").count() == 6, f"components={pg.locator('.comp').count()}/{comps}"
+    step(tag, "STRIDE by component", stride)
 
     def tree():
-        pg.get_by_role("button", name="הצגת החסימה הקטנה ביותר").click()
-        pg.wait_for_timeout(100)
-        blocked = "blocked" in (pg.locator(".tree-status").get_attribute("class") or "")
-        pg.get_by_role("button", name="איפוס").click()
-        pg.wait_for_timeout(100)
-        open_again = "blocked" not in (pg.locator(".tree-status").get_attribute("class") or "")
-        first = pg.locator(".def-toggles .chip").first
+        pg.locator('[data-act="mincut"]').click(); pg.wait_for_timeout(650 * 6 + 200)
+        blocked = "blocked" in (pg.locator(".goal").get_attribute("class") or "")
+        pg.get_by_role("button", name="איפוס").click(); pg.wait_for_timeout(100)
+        open_again = "blocked" not in (pg.locator(".goal").get_attribute("class") or "")
+        first = pg.locator(".tree-bar .dchip").first
         first.click(); pressed = first.get_attribute("aria-pressed") == "true"; first.click()
         return blocked and open_again and pressed, f"min-cut blocks={blocked} reset={open_again} toggle={pressed}"
-    step(tag, "attack tree toggles", tree)
+    step(tag, "attack tree", tree)
 
     def matrix():
-        b = int(pg.locator(".rm-sum .stat .v").first.inner_text())
-        pg.get_by_role("button", name="אחרי הגנות").click(); pg.wait_for_timeout(100)
-        a = int(pg.locator(".rm-sum .stat .v").first.inner_text())
-        dots = pg.locator(".grid5 .dotb").count()
-        pg.locator(".grid5 .dotb").first.click(); pg.wait_for_timeout(80)
-        det = pg.locator(".rm-detail .card").count()
-        pg.get_by_role("button", name="לפני הגנות").click()
-        return b == hi_before and a == hi_after and dots == len(it["threats"]) and det == 1, f"high {b}->{a} (expected {hi_before}->{hi_after}), dots={dots}, detail={det}"
-    step(tag, "risk matrix before/after", matrix)
+        g = pg.locator(".grid5"); dots = [g.nth(0).locator(".dotb").count(), g.nth(1).locator(".dotb").count()]
+        def hi(n):
+            el = pg.locator(".rm-sum .stack").nth(n).locator("i.h")
+            return int(el.inner_text()) if el.count() else 0
+        b, a = hi(0), hi(1)
+        pg.locator(".grid5 .dotb").first.click(); pg.wait_for_timeout(100)
+        pop = pg.locator(".rm-pop").count()
+        pg.keyboard.press("Escape"); pg.wait_for_timeout(60)
+        closed = pg.locator(".rm-pop").count() == 0
+        ok = dots == [len(T), len(T)] and b == hi_before and a == hi_after and pop == 1 and closed
+        return ok, f"dots={dots} high {b}->{a} (expected {hi_before}->{hi_after}) popover={pop} closed={closed}"
+    step(tag, "risk matrices + floating detail", matrix)
+
+    def coverage():
+        exp = sum(len(t["mits"]) for t in T)
+        got = pg.locator("table.cov td.on").count()
+        return got == exp, f"lit cells {got}/{exp}"
+    step(tag, "coverage grid", coverage)
+
+    def terminal():
+        rule = it["mitigations"].get("rule")
+        if not rule: return True, "no rule"
+        lines = pg.locator(".code-lines .ln[data-l]").count()
+        notes = pg.locator(".anno li").count()
+        return lines == len(rule["code"].split("\n")) and notes == len(rule.get("notes", [])), f"lines={lines} notes={notes}"
+    step(tag, "detection rule terminal", terminal)
 
     def term():
-        t = pg.locator(".term").first
+        t = pg.locator(".facts .term, .sec-intro .term").first
         t.click(); pg.wait_for_timeout(100)
         opened = pg.locator(".term-pop").count() == 1
         pg.keyboard.press("Escape"); pg.wait_for_timeout(80)
@@ -110,8 +138,11 @@ def item_interactions(pg, tag, it):
 
     def mit_link():
         pg.locator("article.threat .mchip").first.click(); pg.wait_for_timeout(500)
-        return pg.locator(".mit.flash").count() == 1, "mitigation chip scrolls + flashes"
+        return pg.locator(".ctl.flash").count() == 1, "mitigation chip scrolls + flashes"
     step(tag, "threat -> mitigation link", mit_link)
+
+    step(tag, "recap of seven steps", lambda: (pg.locator(".recap li").count() == 7, ""))
+    step(tag, "method strips", lambda: (pg.locator(".method").count() == 7, f"{pg.locator('.method').count()}"))
 
 
 def page_checks(pw, proto, path, width, theme, it):
@@ -139,10 +170,11 @@ def page_checks(pw, proto, path, width, theme, it):
             step(tag, "theme toggle", lambda: (pg.locator(".theme-toggle").click() or pg.evaluate("document.documentElement.getAttribute('data-theme')") != theme, ""))
         elif path == "index.html":
             step(tag, "gallery cards", lambda: (pg.locator(".item-card").count() >= 1, ""))
-            def tiles():
-                pg.locator(".stride-tile").first.click(); pg.wait_for_timeout(80)
-                return pg.locator("#stride-explain a").count() >= 1, "tile explains + links"
-            step(tag, "STRIDE tiles", tiles)
+            step(tag, "STRIDE cards + seven steps", lambda: (pg.locator(".s6").count() == 6 and pg.locator(".path7 li").count() == 7, ""))
+            def hero():
+                pg.locator('#qsteps li[data-s="3"] button').click(); pg.wait_for_timeout(80)
+                return "s3" in (pg.locator("#sys").get_attribute("class") or ""), "question 3 drives the illustration"
+            step(tag, "hero questions", hero)
             def filt():
                 chip = pg.locator("#filters .row").first.locator(".chip").nth(1)
                 chip.click(); pg.wait_for_timeout(80)
